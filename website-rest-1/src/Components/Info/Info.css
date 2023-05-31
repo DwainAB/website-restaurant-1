@@ -1,6 +1,7 @@
 .container-info{
     display: flex;
     justify-content: space-between;
+    margin-top: 50px;
 }
 
 .container-info-hour{

@@ -26,10 +26,12 @@ li{
     display: flex;
     justify-content: space-between;
     width: 330px;
+    box-sizing: initial;
 }
 
 .list-actions{
     display: flex;
     width: 100px;
     justify-content: space-between;
+    box-sizing: initial;
 }
