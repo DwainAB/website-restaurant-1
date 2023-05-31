@@ -1,9 +1,13 @@
 import React from "react";
+import './Cards.css'
+import plat1 from '../../assets/plat1.png'
+import AddButton from '../../assets/AddButton.svg'
 
 function Cards(){
     return(
         <div className="container-cards">
-            <h1>Notre carte</h1>
+            
+            <h1 className="cards-title">Notre carte</h1>
 
             <div className="navigation-cards">
                 <ul className="navigation-cards-ul">
@@ -19,16 +23,104 @@ function Cards(){
             <div className="global-cards">
 
                 <div className="card">
-                    <img className="card-img" src="" alt="" />
+                    <img className="card-img" src={plat1} alt="" />
                     <h2 className="card-title" >Briyani aux épices</h2>
                     <div className="card-separator" ></div>
                     <div className="card-info">
-                        <p className="card-price">7€</p>
-                        <button className="card-button" type="submit"></button>
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div className="card">
+                    <img className="card-img" src={plat1} alt="" />
+                    <h2 className="card-title" >Briyani aux épices</h2>
+                    <div className="card-separator" ></div>
+                    <div className="card-info">
+                        <p className="card-price">7 €</p>
+                        <button className="card-button" type="submit"> 
+                            <div class="plus-icon"></div>
+                        </button>
                     </div>
                 </div>
 
             </div>
+
+            <button className="card-global-button">Voir plus</button>
 
         </div>
     )
