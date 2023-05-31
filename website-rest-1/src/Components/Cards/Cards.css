@@ -73,7 +73,8 @@
     text-align: center;
     width: 156px;
     margin: 12px auto 0px auto;
-    display: inline-block;
+    justify-content: center;
+    display: flex;
 }
 
 .card-separator{
