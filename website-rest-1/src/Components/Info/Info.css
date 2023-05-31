@@ -1,0 +1,35 @@
+.container-info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-info-hour{
+    width: 460px;
+}
+
+.hour-title{
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.day, .hour{
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.hour{
+    color: #FF9A00;
+}
+
+.opening{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-map iframe{
+    border-radius: 15px;
+    border: 0;
+    box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.47);
+    -webkit-box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.47);
+    -moz-box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.47);
+}

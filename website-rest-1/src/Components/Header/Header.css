@@ -1,0 +1,36 @@
+.container-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.title-header{
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.title-color{
+    color: #FF9A00;
+}
+
+.text-header{
+    font-size: 1.25rem;
+}
+
+.btn-header{
+    background-color: #FF9A00;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 14px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.container-header-info{
+    width: 25rem;
+    margin-top: 150px;
+}
+
+.container-header-img{
+    margin-top: 50px;
+}

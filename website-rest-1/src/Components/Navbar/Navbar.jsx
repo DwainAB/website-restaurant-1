@@ -1,4 +1,5 @@
 import React from "react";
+import "./Navbar.css"
 import Logo from '../../assets/kisspng-wen-ming-house-ii-chinese-cuisine-restaurant-crawf-fortuna-garden-chinese-restaurant-5b06b93226c0d7.6493265115271672821588.png'
 import LogoMarket from "../../assets/panier.svg"
 import LogoAccount from "../../assets/compte.svg"

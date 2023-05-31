@@ -1,0 +1,43 @@
+.background-footer{
+    width: 100%;
+    height: 400px;
+}
+
+.container-footer{
+    position: relative;
+}
+
+.container-info-footer{
+    display: flex;
+    width: 900px;
+    margin: 0 auto;
+    justify-content: space-between;
+    position: absolute;
+    left: 25%;
+    top: 200px;
+}
+
+.info-footer-title{
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.info-footer-img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.info-footer-text{
+    font-size: 1rem;
+}
+
+.location, .numbern .email{
+    display: flex;
+    flex-direction: column;
+}
+
+.li-title{
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,35 @@
+li{
+    list-style: none;
+}
+
+.logo{
+    width: 8rem;
+    height: 5rem;
+}
+
+.link{
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.container-navbar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.action{
+    width: 2.438rem;
+    height: 2.125rem;
+}
+
+.list-links{
+    display: flex;
+    justify-content: space-between;
+    width: 330px;
+}
+
+.list-actions{
+    display: flex;
+    width: 100px;
+    justify-content: space-between;
+}
