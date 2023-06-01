@@ -1,11 +1,10 @@
 import React from "react";
 import './Cards.css'
 import plat1 from '../../assets/plat1.png'
-import AddButton from '../../assets/AddButton.svg'
 
 function Cards(){
     return(
-        <div className="container-cards">
+        <div className="container-cards" id="card">
             
             <h1 className="cards-title">Notre carte</h1>
 

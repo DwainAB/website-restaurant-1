@@ -10,6 +10,16 @@ li{
 .link{
     font-size: 1.25rem;
     font-weight: 600;
+    height: 30px;
+}
+
+.link:hover{
+    border-bottom: 2px solid #FF9A00;
+}
+
+.link a{
+   text-decoration: none;
+   color: black;
 }
 
 .container-navbar{
@@ -35,3 +45,15 @@ li{
     justify-content: space-between;
     box-sizing: initial;
 }
+
+.login{
+    position: absolute;
+    left: 40vw;
+    top: 200px;
+}
+
+li{
+    cursor: pointer;
+}
+
+
