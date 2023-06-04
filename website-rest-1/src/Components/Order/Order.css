@@ -1,0 +1,23 @@
+.pending-order{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.info-article-order{
+    display: flex;
+    justify-content: space-between;
+}
+
+.order{
+    margin-right: 40px;
+    color: white;
+    border-radius: 10px;
+    background-color: #FF9A00;
+    width: 300px;
+    padding: 10px;
+}
+
+.info-total-order{
+    display: flex;
+    justify-content: space-between;
+}

@@ -35,7 +35,7 @@ li{
 .list-links{
     display: flex;
     justify-content: space-between;
-    width: 330px;
+    width: 400px;
     box-sizing: initial;
 }
 
@@ -56,4 +56,40 @@ li{
     cursor: pointer;
 }
 
+
+.logout{
+    position: absolute;
+    top: 120px;
+    left: 82%;
+    display: flex;
+    width: 250px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logout-btns{
+    display: flex;
+    justify-content: space-between;
+}
+
+.adminpage-btn{
+    border: 0;
+    background-color: #FF9A00;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.logout-btn{
+    border: 0;
+    background-color: #FF9A00;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.logout-btn:hover{
+    cursor: pointer;
+}
 
