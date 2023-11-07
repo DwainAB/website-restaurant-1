@@ -1,0 +1,58 @@
+.container-formaddfood{
+    background-color: #DCDCDC;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 50px;
+    border-radius: 20px;
+}
+
+.container-formaddfood form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.container-formaddfood form button{
+    width: 130px;
+    height: 30px;
+    border: 0;
+    border-radius: 10px;   
+    cursor: pointer;
+    transition: .3s;
+}
+.container-formaddfood form button:hover{
+    color: white;
+    background-color: #FF9A00;
+}
+
+.container-btn-form-add{
+    margin: 0 auto;
+}
+
+.container-formaddfood form input{
+    border-radius: 10px;
+    border: 0;
+    height: 50px;
+}
+
+.input-price-food{
+    width: 100px;
+}
+
+textarea{
+    border-radius: 10px;
+    border: 0;
+}
+
+textarea:focus, .container-formaddfood form input:focus{
+    border: 2px solid #FF9A00!important;
+}
+
+.container-visual-food .card{
+    border: 3px solid #FF9A00;
+    transition: All 0.4s ease;
+}
+.container-visual-food .card:hover{
+    border: 3px solid #DCDCDC;
+}

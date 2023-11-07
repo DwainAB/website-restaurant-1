@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import './Cards.css'
 import plat1 from '../../assets/plat1.png'
 
 function Cards(){
+
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    // Fonction pour basculer l'état d'expansion
+    const toggleExpansion = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     return(
         <div className="container-cards" id="card">
             
@@ -19,7 +27,7 @@ function Cards(){
                 </ul>
             </div>
 
-            <div className="global-cards">
+            <div className="global-cards" style={{ height: isExpanded ? 'auto' : '800px' }}>
 
                 <div className="card">
                     <img className="card-img" src={plat1} alt="" />
@@ -119,7 +127,9 @@ function Cards(){
 
             </div>
 
-            <button className="card-global-button">Voir plus</button>
+            <button className="card-global-button" onClick={toggleExpansion}>
+                {isExpanded ? 'Voir moins' : 'Voir plus'}
+            </button>
 
         </div>
     )

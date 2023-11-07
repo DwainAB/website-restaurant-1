@@ -5,6 +5,7 @@
 .container-cards{
     margin-left: 90px;
     margin-right: 90px;
+    overflow: hidden;
 }
 
 .cards-title{
@@ -42,10 +43,11 @@
 
 .global-cards{
     margin-top: 32px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
     justify-content: center;
     gap: 100px;
+    flex-wrap: wrap;
+    display: flex;
+    overflow: hidden;
 }
 
 .card{
@@ -54,6 +56,7 @@
     align-items: center;
     border-radius: 12px;
     transition: 300ms all ease;
+    width: 230px;
 }
 
 .card-img{
@@ -70,9 +73,12 @@
     line-height: 24px;
     text-align: center;
     width: 156px;
+    height: 50px;
     margin: 12px auto 0px auto;
     justify-content: center;
     display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-separator{

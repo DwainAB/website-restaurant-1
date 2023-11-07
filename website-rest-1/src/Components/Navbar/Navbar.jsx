@@ -5,7 +5,6 @@ import Logo from '../../assets/kisspng-wen-ming-house-ii-chinese-cuisine-restaur
 import LogoMarket from "../../assets/panier.svg"
 import LogoAccount from "../../assets/compte.svg"
 import Login from "../Login/Login"
-import { auth } from '../Firebase/FirebaseConfig';
 import {handleLogout} from '../Logout/Logout';
 
 function Navbar(){
@@ -15,9 +14,6 @@ function Navbar(){
     const handleButtonClick = () => {
       setLoginVisible(!loginVisible);
     };
-
-    const user = auth.currentUser;
-
     return(
         <div className="container-navbar">
             <img className="logo" src={Logo} alt="" />
@@ -33,12 +29,12 @@ function Navbar(){
                 <li onClick={handleButtonClick} className="action"><img src={LogoAccount} alt="" /></li>
             </ul>
             <div className="logout" style={{ display: loginVisible ? 'block' : 'none' }}>
-                {user ? 
+           
                 <div className="logout-btns">
                 <a className="adminpage-btn" href="/protectedPage">Page admin</a>
                 <button className='logout-btn' onClick={handleLogout}>Déconnexion</button>
                 </div>
-                : null}
+               
             </div>
             <div className="login">
                  <Login show={loginVisible} />

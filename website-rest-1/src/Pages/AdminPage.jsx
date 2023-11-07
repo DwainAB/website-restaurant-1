@@ -1,9 +1,14 @@
 import React from "react";
+import AddFoodForm from "../Components/FormAddFood/FormAddFood";
+import Cards from "../Components/Cards/Cards"
 
 function AdminPage(){
     return(
-        <h1>test</h1>
-    )
+        <div>
+            <AddFoodForm/>
+            <Cards/>
+        </div>
+        )
 }
 
 export default AdminPage
