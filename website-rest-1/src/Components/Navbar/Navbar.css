@@ -1,3 +1,7 @@
+body{
+    overflow-x: hidden;
+}
+
 li{
     list-style: none;
 }
@@ -141,8 +145,50 @@ li{
 .container-basket-product{
     height: 68vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.container-basket-form form{
+    height: 64vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-basket-form p {
+    text-align: center;
+    margin: 0;
+}
+
+.container-basket-form form{
+    gap: 20px;
+}
+
+.container-basket-form input{
+    width: 320px;
+    height: 50px;
+    border-radius: 20px;
+    border: 2px solid #FF9A00;
+    padding-left: 20px;
+}
+
+.container-form-fullname{
+    display: flex;
+    flex-direction: row!important;
+    gap:20px;
+}
+
+.container-form-fullname input{
+    width: 150px!important;
+}
+
+input[type=submit]{
+    background-color: #FF9A00;
+    color: #fff;
+    width: 150px;
 }
 
 .basket-empty{
@@ -173,7 +219,7 @@ li{
     --color: #FF9A00;
     font-family: inherit;
     display: inline-block;
-    width: 250px;
+    width: 300px;
     height: 2.6em;
     line-height: 2.5em;
     position: relative;
@@ -186,6 +232,7 @@ li{
     font-weight: 500;
     color: var(--color);
     border-radius: 20px;
+    background-color: white;
    }
    
    .container-basket-button button:before {
@@ -194,7 +241,7 @@ li{
     z-index: -1;
     background: var(--color);
     height: 150px;
-    width: 310px;
+    width: 350px;
     border-radius: 50%;
    }
    

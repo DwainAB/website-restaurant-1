@@ -11,10 +11,15 @@ function Navbar(){
 
     const [loginVisible, setLoginVisible] = useState(false);
     const [basketVisible, setBasketVisible] = useState(false)
+    const [formVisible, setFormVisible] = useState(false)
 
     const handleButtonClick = () => {
       setLoginVisible(!loginVisible);
     };
+
+    const showForm = () =>{
+        setFormVisible(!formVisible)
+    }
 
     const activateBasket = () => {
         setBasketVisible(!basketVisible);
@@ -25,6 +30,7 @@ function Navbar(){
         } else {
             // Autoriser le scroll
             document.body.style.overflow = 'visible';
+            document.body.style.overflowX = "hidden"
         }
     };
 
@@ -59,17 +65,37 @@ function Navbar(){
                 <h1>Votre pannier</h1>
                 <h2>A emporter</h2>
 
+                { formVisible ? (
+                    
+                <div className="container-basket-form">
+                    <p>Veuillez rentrez vos informations <br/>afin de passer commande</p>
+                    <form action="">
+                        <div className="container-form-fullname">
+                            <input type="text" name="firstname" placeholder="Prénom"/>
+                            <input type="text" name="lastname" placeholder="Nom" />
+                        </div>
+                        <input type="mail" placeholder="Email" name="email" />
+                        <input type="text" placeholder="Téléphone" name="tel" />  
+                        <input type="text" placeholder="Adresse" />    
+                        <input type="submit" />
+                    </form>
+                </div>
+                )
+                : (
                 <div className="container-basket-product">
                     <div className="basket-empty">
                         <span class="material-symbols-outlined">production_quantity_limits</span>
                         <p>Votre panier est actuellement vide</p>
                     </div>
                 </div>
+                )}
+
+
 
 <hr />
                 <div className="container-basket-button">
-                    <button>Commander</button>
-                    <button>Continuez votre commande</button>
+                    <button onClick={showForm}>{formVisible ? "Retour" : "Commander"}</button>
+                    <button onClick={activateBasket}>Continuez votre commande</button>
                 </div>
             </div>
         </div>
