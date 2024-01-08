@@ -28,6 +28,7 @@
 .navigation-cards-ul{
     display: flex;
     gap: 48px;
+    padding: 0;
 }
 
 .navigation-cards-li{
@@ -43,8 +44,7 @@
 
 .global-cards{
     margin-top: 32px;
-    justify-content: center;
-    gap: 100px;
+    gap: 80px;
     flex-wrap: wrap;
     display: flex;
     overflow: hidden;

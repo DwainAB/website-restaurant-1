@@ -27,7 +27,7 @@ function Cards(){
                 </ul>
             </div>
 
-            <div className="global-cards" style={{ height: isExpanded ? 'auto' : '800px' }}>
+          <div className="global-cards" style={{ height: isExpanded ? 'auto' : '800px' }}>
 
                 <div className="card">
                     <img className="card-img" src={plat1} alt="" />

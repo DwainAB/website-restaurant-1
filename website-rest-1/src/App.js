@@ -6,6 +6,7 @@ import Home from "./Pages/Home"
 import Navbar from './Components/Navbar/Navbar'
 import Footer from "./Components/Footer/Footer";
 import AdminPage from "./Pages/AdminPage"
+import BasketPage from "./Pages/BasketPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/admin-page" element={<AdminPage/>}/>
+            <Route path="/basket" element={<BasketPage/>}/>
           </Routes>
         </div>
         <Footer/>

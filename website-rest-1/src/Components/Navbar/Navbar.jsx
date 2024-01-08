@@ -10,10 +10,24 @@ import {handleLogout} from '../Logout/Logout';
 function Navbar(){
 
     const [loginVisible, setLoginVisible] = useState(false);
+    const [basketVisible, setBasketVisible] = useState(false)
 
     const handleButtonClick = () => {
       setLoginVisible(!loginVisible);
     };
+
+    const activateBasket = () => {
+        setBasketVisible(!basketVisible);
+    
+        if (!basketVisible) {
+            // Empêcher le scroll
+            document.body.style.overflow = 'hidden';
+        } else {
+            // Autoriser le scroll
+            document.body.style.overflow = 'visible';
+        }
+    };
+
     return(
         <div className="container-navbar">
             <img className="logo" src={Logo} alt="" />
@@ -25,7 +39,7 @@ function Navbar(){
             </ul>
 
             <ul className="list-actions">
-                <li className="action"><img src={LogoMarket} alt="" /></li>
+                <li onClick={activateBasket} className="action"><img src={LogoMarket} alt="" /></li>
                 <li onClick={handleButtonClick} className="action"><img src={LogoAccount} alt="" /></li>
             </ul>
             <div className="logout" style={{ display: loginVisible ? 'block' : 'none' }}>
@@ -38,6 +52,25 @@ function Navbar(){
             </div>
             <div className="login">
                  <Login show={loginVisible} />
+            </div>
+
+            <div class={basketVisible ? "container-basket" : "container-basket-close"}>
+                <span onClick={activateBasket} class="material-symbols-outlined">arrow_forward_ios</span>
+                <h1>Votre pannier</h1>
+                <h2>A emporter</h2>
+
+                <div className="container-basket-product">
+                    <div className="basket-empty">
+                        <span class="material-symbols-outlined">production_quantity_limits</span>
+                        <p>Votre panier est actuellement vide</p>
+                    </div>
+                </div>
+
+<hr />
+                <div className="container-basket-button">
+                    <button>Commander</button>
+                    <button>Continuez votre commande</button>
+                </div>
             </div>
         </div>
     )

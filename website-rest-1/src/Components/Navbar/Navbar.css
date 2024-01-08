@@ -93,3 +93,126 @@ li{
     cursor: pointer;
 }
 
+.container-basket{
+    border-left: 5px solid #FF9A00;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 500px;
+    background-color: white;
+    height: 100vh;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(0);}
+
+.container-basket-close{
+    border-left: 5px solid #FF9A00;
+    width: 500px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    height: 100vh;
+    transform: translateX(500px);
+    transition: transform 0.8s ease-in-out;    overflow: hidden;
+}
+
+.container-basket>span, .container-basket-close>span{
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    font-size: 2rem;
+    color: #FF9A00;
+}
+.container-basket>span:hover{
+    cursor: pointer;
+}
+
+.container-basket h1, .container-basket-close h1{
+    text-align: center;
+    font-size: 2rem;
+}
+
+.container-basket h2, .container-basket-close h2{
+    text-align: center;
+    font-size: 1.5rem;
+    color: #FF9A00;
+}
+
+.container-basket-product{
+    height: 68vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.basket-empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.basket-empty span{
+    font-size: 5rem;
+    color: lightslategray;
+}
+
+.basket-empty p{
+    font-weight: bold;
+}
+
+.container-basket-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.container-basket-button button {
+    --color: #FF9A00;
+    font-family: inherit;
+    display: inline-block;
+    width: 250px;
+    height: 2.6em;
+    line-height: 2.5em;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--color);
+    transition: color .5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--color);
+    border-radius: 20px;
+   }
+   
+   .container-basket-button button:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--color);
+    height: 150px;
+    width: 310px;
+    border-radius: 50%;
+   }
+   
+   .container-basket-button button:hover {
+    color: #fff;
+   }
+   
+   .container-basket-button button:before {
+    top: 100%;
+    left: 100%;
+    transition: all .7s;
+   }
+   
+   .container-basket-button button:hover:before {
+    top: -30px;
+    left: -30px;
+   }
+   
+   button:hover{
+    cursor: pointer;
+   }
