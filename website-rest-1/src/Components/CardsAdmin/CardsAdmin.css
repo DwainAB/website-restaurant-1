@@ -1,0 +1,158 @@
+*{
+    box-sizing: border-box;
+}
+
+.navigation-cards-ul{
+    display: flex;
+    gap: 48px;
+    padding: 0;
+}
+
+.navigation-cards-li{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    list-style: none;
+    cursor: pointer;
+    transition: 200ms all ease;
+}
+
+
+.card{
+    display: inline-block;
+    background-color: #DCDCDC;
+    align-items: center;
+    border-radius: 12px;
+    transition: 300ms all ease;
+    width: clamp(190px,12vw,240px);
+    position: relative;
+}
+
+
+.card-button{
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.pagination button{
+    color: #FF9A00;
+    background-color: #fff;
+    width: 50px;
+    height: 30px;
+    border: 2px solid #FF9A00;
+    border-radius: 10px;
+}
+
+.pagination button.active{
+    background-color: #FF9A00;
+    color: white;
+}
+
+.card-global-button{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    padding: 16px 42px;
+    background: #FF9A00;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    margin-top: 64px;
+}
+
+.btn-remove{
+    background-color: red;
+    border-radius: 50%;
+    border: 0;
+    color: white;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.card:hover{
+    background-color: #FF9A00;
+    color: white;
+    .pen{
+        color: white;
+    }
+    .plus-icon::before,
+    .plus-icon::after{
+        background-color: #FF9A00;
+    }
+}
+
+.navigation-cards-li:hover{
+    color: #FF9A00;
+}
+
+.update-form{
+    margin: 0 auto;
+    background-color: #FF9A00;
+    padding: 50px;
+    border-radius: 50px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    z-index: 9999;
+
+}
+
+.update-form form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.update-form form label{
+    font-weight: bold;
+    
+}
+
+.update-form form button{
+    height: 30px;
+    background-color: white;
+    border: 0;
+    border-radius: 20px;
+}
+.update-form form button[type=submit]{
+    margin-top: 30px;
+}
+
+.update-form input, .update-form select{
+    border-radius: 20px;
+    padding-left: 10px;
+    border: 2px solid #FF9A00;
+    height: 40px;
+}
+
+.update-form #price{
+    width: 150px;
+}
+
+.update-form h2{
+    text-align: center;
+}
+
+

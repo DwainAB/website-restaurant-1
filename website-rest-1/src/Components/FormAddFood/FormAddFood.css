@@ -5,6 +5,13 @@
     flex-wrap: wrap;
     padding: 50px;
     border-radius: 20px;
+    margin-top: 30px;
+}
+
+
+.hiFormAdd{
+text-align: center;
+margin-top: 60px;
 }
 
 .container-formaddfood form{
@@ -52,7 +59,11 @@ textarea:focus, .container-formaddfood form input:focus{
 .container-visual-food .card{
     border: 3px solid #FF9A00;
     transition: All 0.4s ease;
+    height: 335px;
+    width: 230px;
+    
 }
 .container-visual-food .card:hover{
     border: 3px solid #DCDCDC;
 }
+

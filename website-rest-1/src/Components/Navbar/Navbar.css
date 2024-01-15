@@ -6,13 +6,38 @@ li{
     list-style: none;
 }
 
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    transition: all 0.4s;
+}
+
+.action span{
+    font-size: clamp(1.7rem,1.70vw,2rem);
+}
+
+.btn-menu{
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 110px;
+}
+
+
+
 .logo{
-    width: 8rem;
-    height: 5rem;
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    object-fit: cover;
+    width: clamp(13rem,12.5vw,15rem);
+    height: 8rem;
+
 }
 
 .link{
-    font-size: 1.25rem;
+    font-size: clamp(1.1rem,1.30vw,1.25rem);
     font-weight: 600;
     height: 30px;
 }
@@ -29,11 +54,16 @@ li{
 .container-navbar{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .action{
     width: 2.438rem;
     height: 2.125rem;
+}
+
+.action img{
+    width:clamp(2.3rem, 2.2vw,2.6rem)
 }
 
 .list-links{
@@ -102,11 +132,18 @@ li{
     position: absolute;
     top: 0;
     right: 0;
-    width: 500px;
+    width: clamp(350px, 26vw,500px);
     background-color: white;
     height: 100vh;
     transition: transform 0.5s ease-in-out;
-    transform: translateX(0);}
+    transform: translateX(0);
+    z-index: 9999;
+    overflow: auto;
+}
+
+.sup{
+    display: none;
+}
 
 .container-basket-close{
     border-left: 5px solid #FF9A00;
@@ -117,14 +154,16 @@ li{
     background-color: white;
     height: 100vh;
     transform: translateX(500px);
-    transition: transform 0.8s ease-in-out;    overflow: hidden;
+    transition: transform 0.8s ease-in-out;    
+    overflow: hidden;
+    z-index: 9999;
 }
 
 .container-basket>span, .container-basket-close>span{
     position: absolute;
-    top: 25px;
+    top: 1vw;
     left: 25px;
-    font-size: 2rem;
+    font-size: clamp(1.5rem,1.5vw,2rem);
     color: #FF9A00;
 }
 .container-basket>span:hover{
@@ -133,21 +172,62 @@ li{
 
 .container-basket h1, .container-basket-close h1{
     text-align: center;
-    font-size: 2rem;
+    font-size: clamp(1.5rem,1.5vw,2rem);
 }
 
 .container-basket h2, .container-basket-close h2{
     text-align: center;
-    font-size: 1.5rem;
+    font-size: clamp(1rem,1.3vw,1.5rem);
     color: #FF9A00;
 }
 
-.container-basket-product{
-    height: 68vh;
+.basket-item{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    margin-right: 20px;
+    align-items: center;
+}
+
+.basket-item .container-btn-item{
+    display: flex;
+    gap: 10px;
+}
+
+.basket-item .container-btn-item button{
+    background-color: white;
+    border: 2px solid #FF9A00;
+    color: #FF9A00;
+    height: 30px;
+    width: 30px;
+    font-size: 1.5rem;
+}
+.basket-item .container-btn-item button:hover{
+    background-color: #FF9A00;
+    color: #fff;
+}
+
+.basket-item p {
+    font-weight: bold;
+}
+
+.total-price{
+    text-align: end;
+    margin-right: 20px;
+}
+
+.basket-empty{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+.container-basket-product{
+    height: 65vh;
+    overflow: auto;
 }
 
 .container-basket-form form{
@@ -199,12 +279,13 @@ input[type=submit]{
 }
 
 .basket-empty span{
-    font-size: 5rem;
+    font-size: clamp(3rem,4.16vw,5rem);
     color: lightslategray;
 }
 
 .basket-empty p{
     font-weight: bold;
+    font-size: clamp(12px,0.8vw,16px);
 }
 
 .container-basket-button{
@@ -219,7 +300,7 @@ input[type=submit]{
     --color: #FF9A00;
     font-family: inherit;
     display: inline-block;
-    width: 300px;
+    width: clamp(150px,15.6vw,300px);
     height: 2.6em;
     line-height: 2.5em;
     position: relative;
@@ -227,7 +308,7 @@ input[type=submit]{
     border: 2px solid var(--color);
     transition: color .5s;
     z-index: 1;
-    font-size: 17px;
+    font-size: clamp(13px,0.9vw,17px);
     border-radius: 6px;
     font-weight: 500;
     color: var(--color);
@@ -262,4 +343,112 @@ input[type=submit]{
    
    button:hover{
     cursor: pointer;
+   }
+
+   .btn-close-menu, .container-btn-close-menu{
+    display: none;
+   }
+   @media screen and (max-width: 1025px) {
+
+    .container-nav-mobil{
+        margin-bottom: 150px;
+    }
+        .btn-menu{
+            display: block;
+            font-size: 1.7rem;
+        }
+        .btn-menu:hover{
+            cursor: pointer;
+        }
+
+        .navbar-close{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0px;
+            background-color: #FF9A00;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+}
+
+        .navbar-open{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 270px;
+            background-color: #FF9A00;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .list-links{
+            flex-direction: column;
+            text-align: center;
+            width: 100px;
+            padding: 0;
+        }
+
+        .link a{
+            color: #fff;
+        }
+
+        .list-actions{
+            margin: 0;
+            color: #fff;
+            padding: 0;
+            width: 100px;
+            margin-bottom: 40px;
+        }
+
+        .action{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-btn-close-menu{
+            display: block;
+        }
+        .container-btn-close-menu:hover{
+            cursor: pointer;
+        }
+
+        .btn-close-menu{
+            display: block;
+            color: #fff;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+        
+   }
+
+   @media screen and (max-width: 825px) {
+
+    
+    body{
+        overflow-x: hidden;
+    }
+
+    .btn-menu{
+        right: 50px;
+    }
+
+    .logo{
+        left: -20px;
+    }
+
+    .container-basket{
+        height: 100%;
+    }
+
+    .container-basket-product{
+        height: 60vh;
+    }
+
+    .container-basket-form{
+        height: 60vh;
+    }
    }

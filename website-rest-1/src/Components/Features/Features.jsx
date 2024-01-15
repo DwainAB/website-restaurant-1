@@ -12,14 +12,14 @@ function Features(){
 
                 <div className="features-card">
                     <img className="features-card-img" src={symbol1} alt="" />
-                    <h2 className="features-card-title">Produit frais</h2>
-                    <p className="features-card-p">Nos poissons sont pêchés le <br /> jours même</p>
+                    <h2 className="features-card-title">Produits frais</h2>
+                    <p className="features-card-p">Nos poissons sont pêchés le <br /> jour même</p>
                 </div>
 
                 <div className="features-card">
                     <img className="features-card-img" src={symbol2} alt="" />
                     <h2 className="features-card-title">Service rapide</h2>
-                    <p className="features-card-p">Nos équipes répondrons à <br /> vos attentes dans les plus <br /> bref délai</p>
+                    <p className="features-card-p">Nos équipes répondront à <br /> vos attentes dans les plus <br /> bref délais</p>
                 </div>
 
                 <div className="features-card">

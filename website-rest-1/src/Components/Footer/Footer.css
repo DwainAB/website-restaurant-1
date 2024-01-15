@@ -13,23 +13,24 @@
     width: 50vw;
     justify-content: space-between;
     position: absolute;
-    left: 25%;
+    left: 50%;
+    transform: translateX(-50%);
     top: 200px;
 }
 
 .info-footer-title{
-    font-size: 1rem;
+    font-size: clamp(.7rem,0.83vw,1rem);
     font-weight: bold;
     margin-left: 10px;
 }
 
 .info-footer-img {
-    width: 1.5rem;
+    width: clamp(1rem,1.25vw,1.5rem);
     height: 1.7rem;
 }
 
 .info-footer-text{
-    font-size: 1rem;
+    font-size: clamp(.7rem,0.83vw,1rem);
 }
 
 .location, .numbern .email{
@@ -40,4 +41,49 @@
 .li-title{
     display: flex;
     align-items: center;
+}
+
+
+
+@media screen and (max-width:1025px) {
+    .container-info-footer ul{
+        padding-left: 10px;
+    } 
+}
+
+@media screen and (max-width: 850px) {
+    .container-info-footer{
+        width: clamp(30rem,21.19vw,40rem);
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .container-info-footer{
+        flex-direction: column;
+        text-align: center;
+        top: 150px;
+        justify-content: center;
+        width: 150px;
+    }
+
+    .container-info-footer ul{
+        margin: 0;
+        width: 200px;
+    }
+
+    .info-footer-title{
+        font-size: 1rem;
+    }
+
+
+    .info-footer-text{
+        font-size: 0.8rem;
+        margin-top: 0;
+        text-align: start;
+    }
+
+    .background-footer{
+        height: 500px;
+    }
 }

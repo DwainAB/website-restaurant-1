@@ -1,0 +1,58 @@
+.container-card-order{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.title-order{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.card-order{
+    background-color: #DCDCDC;
+    padding: 20px;
+    height: 300px;
+    position: relative;
+    
+}
+
+.section-card-order{
+    display: flex;
+    justify-content: space-between;
+}
+
+.order{
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 200px;
+}
+
+.product-order p{
+ margin: 5px;
+}
+
+.total-order{
+    font-weight: bold;
+    margin-top: 30px;
+    text-align: end;
+}
+
+.text-empty-order{
+    text-align: center;
+}
+
+.delete-order{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    color: white;
+    border: 0;
+}
+

@@ -4,17 +4,15 @@
     margin-top: 50px;
 }
 
-.container-info-hour{
-    width: 460px;
-}
+
 
 .hour-title{
-    font-size: 2.5rem;
+    font-size: clamp(1.7rem,2.1vw,2.5rem);
     font-weight: 600;
 }
 
 .day, .hour{
-    font-size: 1.25rem;
+    font-size: clamp(1rem,1.04vw,1.25rem);
     font-weight: 600;
 }
 
@@ -24,7 +22,7 @@
 
 .opening{
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
 }
 
 .container-map iframe{
@@ -33,4 +31,32 @@
     box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.47);
     -webkit-box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.47);
     -moz-box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.47);
+}
+
+iframe{
+    width: clamp(20rem,29.16vw,35rem);
+    height: clamp(25rem,25.83vw,31rem);    
+}
+
+.container-map{
+    width: clamp(20rem,29.16vw,35rem);
+}
+@media screen and (max-width:765px) {
+    .container-info{
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .container-info-hour{
+        margin: 0 auto;
+    }
+
+    .hour-title{
+        text-align: center;
+    }
+
+    .container-map{
+        margin: 0 auto;
+    }
 }

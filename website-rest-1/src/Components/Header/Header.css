@@ -4,7 +4,7 @@
 }
 
 .title-header{
-    font-size: 2.5rem;
+    font-size: clamp(2rem,2.3vw,2.5rem);
     font-weight: bold;
 }
 
@@ -33,4 +33,26 @@
 
 .container-header-img{
     margin-top: 50px;
+    width: clamp(30rem,37vw,44rem);
+}
+
+.container-header-img img{
+    width: 100%;
+}
+
+@media screen and (max-width:955px) {
+
+    .container-header{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container-header-img{
+        display: none;
+    }
+
+    .container-header-info{
+        margin: 50px;
+        text-align: center;
+    }
 }

@@ -5,8 +5,8 @@ function Info(){
     return(
         <div className="container-info">
 
-            <div className="container-info-hour">
-                <h2 className="hour-title">Horraire :</h2>
+            <div className="container-info-hour" id="hours">
+                <h2 className="hour-title" >Horaires :</h2>
                 <div className="opening">
                     <div className="days">
                         <p className="day">Lundi</p>
