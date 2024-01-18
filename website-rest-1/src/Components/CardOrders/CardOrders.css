@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 20px;
     margin-top: 50px;
+    width: clamp(28rem,37.5vw,45rem);
 }
 
 .title-order{
@@ -56,3 +57,36 @@
     border: 0;
 }
 
+.order-info-client p{
+    font-size: 1rem;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.card-order h2{
+    font-size: clamp(1.2rem,2.08vw,1.5rem);
+}
+
+@media screen and (max-width: 750px) {
+    .section-card-order{
+        flex-direction:column-reverse;
+    }
+
+    .container-card-order{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-order{
+        height: 500px;
+        width: 300px;
+    }
+
+    .order{
+        height: 200px;
+        max-height: 200px;
+        overflow: auto;
+    }
+}

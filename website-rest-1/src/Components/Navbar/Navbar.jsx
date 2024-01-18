@@ -126,7 +126,7 @@ function Navbar() {
     
     return (
         <div className="container-navbar">
-            <nav>
+        
                 <div className="container-nav-mobil">
                     <img className="logo" src={Logo} alt="Logo" />
 
@@ -157,7 +157,7 @@ function Navbar() {
                         <button className='logout-btn' onClick={handleLogout}>Déconnexion</button>
                     </div>
                 </div>
-            </nav>
+         
 
 
 

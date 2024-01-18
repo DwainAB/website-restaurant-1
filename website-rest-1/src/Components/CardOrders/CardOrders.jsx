@@ -9,6 +9,7 @@ function CardsOrders() {
         fetchOrders();
     }, []);
 
+    console.log(orders);
     const fetchOrders = async () => {
         try {
             const ordersData = await apiService.getAllOrdersAndClients();
@@ -21,8 +22,10 @@ function CardsOrders() {
                         return acc + (price * quantity);
                     }, 0);
                     return { ...order, orders: parsedOrders, total };
-                } catch (error) {
-                    console.error('Erreur lors du traitement JSON pour la commande:', order, error);
+                }catch (error) {
+                    console.error('Erreur lors du traitement JSON pour la commande:', order);
+                    console.error('Détail de l\'erreur:', error);
+                    console.error('JSON brut:', order.orders); // Imprimez la chaîne JSON brute pour examen
                     return { ...order, orders: null, total: 0 };
                 }
             });
@@ -31,6 +34,7 @@ function CardsOrders() {
             console.error('Erreur lors de la récupération des commandes:', error);
         }
     }
+    
 
     const handleDelete = async (clientId) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce client et toutes ses commandes ?")) {
@@ -58,16 +62,16 @@ function CardsOrders() {
                             <div className="order">
                                 {order.orders ? order.orders.map((product, index) => (
                                     <div key={index} className="product-order">
-                                        <p>{product.order_quantity}x - {product.product_title || 'Produit inconnu'} - Prix: {product.product_price || 'Prix inconnu'}</p>
+                                        <p><span className="bold">{product.order_quantity}x</span> - {product.product_title || 'Produit inconnu'}</p>
                                     </div>
                                 )) : <p>Informations sur les commandes indisponibles</p>}
                             </div>
 
                             <div className="order-info-client">
-                                <p>Client: {order.client_firstname} {order.client_lastname}</p>
-                                <p>Mail: {order.client_email}</p>
-                                <p>Tel: {order.client_phone}</p>
-                                <p>Adresse: {order.client_address}</p>
+                                <p><span className="bold">Client:</span> {order.client_firstname} {order.client_lastname}</p>
+                                <p><span className="bold">Mail:</span> {order.client_email}</p>
+                                <p><span className="bold">Tel:</span> {order.client_phone}</p>
+                                <p><span className="bold">Adresse:</span> {order.client_address}</p>
                                 <p className="total-order">Total: {order.total ? order.total.toFixed(2) : '0.00'} €</p>
                                 <button className="delete-order" onClick={() => handleDelete(order.client_id)} >
                                     X

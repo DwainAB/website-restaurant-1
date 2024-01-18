@@ -4,12 +4,14 @@ import './CardsAdmin.css';
 
 function Cards() {
     const [foods, setFoods] = useState([]);
-    const [editableFood, setEditableFood] = useState(null);
+    const [editableFoods, setEditableFoods] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('Tous');
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
-    const [isEditingFood, setIsEditingFood] = useState(false);
-    const [currentFood, setCurrentFood] = useState(null);
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 790);
+    const [itemsPerPage, setItemsPerPage] = useState(isSmallScreen ? 6 : 10);
+
+
+    console.log(editableFoods, foods);
 
     useEffect(() => {
         const fetchFoods = async () => {
@@ -23,202 +25,183 @@ function Cards() {
         };
 
         fetchFoods();
+        
+        const handleResize = () => {
+            const smallScreen = window.innerWidth <= 790;
+            setIsSmallScreen(smallScreen);
+            // Mise à jour du nombre d'articles par page en fonction de la taille de l'écran
+            setItemsPerPage(smallScreen ? 6  : 10);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
-    const handleEditClick = (food) => {
-        setIsEditingFood(true);
-        setCurrentFood(food);
-        setEditableFood({
-            ...food,
-            image: null, // Préparez pour une nouvelle image si nécessaire
-        });
-    };
 
-    const handleUpdateFood = async (event) => {
+
+    const handleInputChange = (foodId, event) => {
+        const { name, type, value, files } = event.target;
+        const newValue = type === "file" ? files[0] : value;
+      
+        setEditableFoods((prev) => ({
+            ...prev,
+            [foodId]: {
+                ...prev[foodId],
+                [name]: newValue === '' ? "" : newValue,
+            },
+        }));
+    };
+     
+    
+    
+    const handleUpdateAllFoods = async (event) => {
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('title', editableFood.title);
-        formData.append('description', editableFood.description);
-        formData.append('category', editableFood.category);
-        formData.append('price', editableFood.price.toString());
-        if (editableFood.image instanceof File) {
-            formData.append('image', editableFood.image, editableFood.image.name);
-        }
-
-        if (editableFood.image instanceof File) {
-            formData.append('image', editableFood.image, editableFood.image.name);
-        }
-
-        try {
-            const response = await apiService.updateFood(currentFood.id, formData);
-            console.log("Réponse de l'API:", response);
-            if (response.success) {
-                console.log('Mise à jour réussie :', response.message);
-                setFoods(foods.map(food => (food.id === currentFood.id ? { ...food, ...editableFood } : food)));
-                setIsEditingFood(false);
-                setCurrentFood(null);
-            } else {
-                console.error('Échec de la mise à jour :', response.message);
+        
+        let isUpdated = false;
+    
+        for (const foodId in editableFoods) {
+            const formData = new FormData();
+            const foodData = editableFoods[foodId];
+    
+            for (const key in foodData) {
+                formData.append(key, foodData[key]);
             }
-        } catch (error) {
-            if (error.response) {
-                error.response.text().then(text => {
-                    console.error("Erreur lors de la mise à jour du plat :", text);
-
-                });
-            } else {
-                console.error("Erreur lors de la mise à jour du plat :", error);
-                window.location.reload()
-
-            }       
-         }
-    };
-
-    const handleRemoveFood = async (foodId) => {
-        try {
-            const response = await apiService.deleteFood(foodId);
-            if (response.status === 200) {
-                console.log('Produit supprimé avec succès');
-                // Rafraîchir la page pour afficher les produits mis à jour
-                window.location.reload();
-                console.log(1);
-            } else {
-                console.error('Échec de la suppression du produit');
-                console.log(2);
-            }
-        } catch (error) {
-            if (error instanceof SyntaxError) {
-                // Si une SyntaxError se produit, ignorez-la car la réponse peut être vide
-                console.log('La réponse est vide (pas de JSON)');
-                // Rafraîchir la page pour afficher les produits mis à jour
-                window.location.reload();
-            } else {
-                console.error('Erreur lors de la suppression du produit :', error);
-                console.log(3);
+    
+            try {
+                const response = await apiService.updateFood(foodId, formData);
+                if (response.success) {
+                    console.log('Mise à jour réussie', response.message);
+                    isUpdated = true;
+                } else {
+                    console.error('Erreur lors de la mise à jour', response.message);
+                }
+            } catch (error) {
+                console.error('Erreur lors de l\'envoi à l\'API', error);
             }
         }
+    
+        if (isUpdated) {
+            alert("Modifications ajoutées avec succès");
+            const updatedFoods = await apiService.getFoods();
+            setFoods(updatedFoods);
+        }
+    
+        setEditableFoods({});
     };
     
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setEditableFood(prev => ({ ...prev, [name]: value }));
-    };
+    
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
-        setCurrentPage(1); // Réinitialiser la pagination lors du changement de catégorie
+        setCurrentPage(1);
     };
 
-    const filteredFoods = foods.filter((food) => {
-        return selectedCategory === 'Tous' || food.category === selectedCategory;
-    });
+    const filteredFoods = foods.filter(food => selectedCategory === 'Tous' || food.category === selectedCategory);
 
-    // Obtenir les produits pour la page actuelle
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentFoods = filteredFoods.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Changer de page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    // Calculer le nombre de pages
     const pageCount = Math.ceil(filteredFoods.length / itemsPerPage);
+
+    const handleDeleteFood = async (foodId) => {
+        try {
+            const response = await apiService.deleteFood(foodId);
+            console.log('te');
+            if (response.status === 204) {
+                console.log('Suppression réussie');
+                const updatedFoods = await apiService.getFoods(); // Ajout de cette ligne pour récupérer la liste mise à jour
+            setFoods(updatedFoods);
+                // Effectuez les actions nécessaires après la suppression
+            } else {
+                console.error('Réponse inattendue lors de la suppression');
+            }
+        } catch (error) {
+            const updatedFoods = await apiService.getFoods(); // Ajout de cette ligne pour récupérer la liste mise à jour
+            setFoods(updatedFoods);
+            console.error('Erreur lors de la suppression', error.message);
+        }
+    };
 
     return (
         <div className="container-cards" id="card">
-            <h1 className="cards-title">Notre carte</h1>
-            <div className="navigation-cards">
-                <ul className="navigation-cards-ul">
-                    {['Tous', 'Entrées', 'Plat chaud', 'Sushi', 'Yakitori', 'Dessert'].map((category) => (
-                        <li
-                            key={category}
-                            className={`navigation-cards-li ${selectedCategory === category ? 'active' : ''}`}
-                            onClick={() => handleCategoryClick(category)}
-                        >
-                            {category}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="global-cards">
-                {currentFoods.map((food) => (
-                    <div className="card" key={food.id}>
-                        <img className="card-img" src={`http://localhost/back-website-restaurant-1/${food.image}`} alt={food.title} />
-                        <h2 className="card-title">{food.title}</h2>
-                        <div className="card-separator"></div>
-                        <div className="card-info">
-                            <p className="card-price">{food.price} €</p>
-                            <button className="card-button" type="button" onClick={() => handleEditClick(food)}>
-                                <span className="material-symbols-outlined pen">edit</span>                            
+            <form onSubmit={handleUpdateAllFoods}>
+                <div className="list-product">
+                    <div className="container-title-product">
+                        <p>Image</p>
+                        <p>Titre</p>
+                        <p>Description</p>
+                        <p>Prix</p>
+                        <p></p>
+                    </div>
+                    {currentFoods.map((food) => (
+                        <div className="product-info" key={food.id}>
+                            <label className="fileUpload" htmlFor={`fileUpload-${food.id}`}>Changer l'image</label>
+                            <input
+                                id={`fileUpload-${food.id}`}
+                                style={{display: "none"}}
+                                type="file"
+                                name="image"
+                                placeholder="image du plat"
+                                onChange={(e) => handleInputChange(food.id, e)}
+                            />
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder={food.title}
+                                value={editableFoods[food.id]?.title !== undefined ? editableFoods[food.id]?.title : food.title}
+                                onChange={(e) => handleInputChange(food.id, e)}
+                            />
+                            <input
+                                type="text"
+                                name="description"
+                                placeholder="description du plat"
+                                value={editableFoods[food.id]?.description !== undefined ? editableFoods[food.id]?.description : food.description}
+                                onChange={(e) => handleInputChange(food.id, e)}
+                            />
+                            <select
+                                name="category"
+                                value={editableFoods[food.id]?.category !== undefined ? editableFoods[food.id]?.category : food.category} // Utilisez la catégorie de food comme valeur par défaut
+                                onChange={(e) => handleInputChange(food.id, e)}
+                            >
+                                <option value="Plat chaud">Plat chaud</option>
+                                <option value="Entrées">Entrées</option>
+                                <option value="Dessert">Dessert</option>
+                                {/* Ajoutez d'autres options de catégorie au besoin */}
+                            </select>
+                            <input
+                                className="input-price"
+                                type="text"
+                                name="price"
+                                placeholder="prix du plat"
+                                value={editableFoods[food.id]?.price !== undefined ? editableFoods[food.id]?.price : food.price}
+                                onChange={(e) => handleInputChange(food.id, e)}
+                            />
+                            <button className="sup-product" onClick={() => handleDeleteFood(food.id)}>
+                                {isSmallScreen ? 'Supprimer' : 'X'}
                             </button>
                         </div>
-                        <button onClick={() => handleRemoveFood(food.id)} className="btn-remove">X</button>
-                    </div>
-                ))}
-        {editableFood && (
-            <div className="update-form">
-                <h2>Modifier le Plat</h2>
-                <form onSubmit={handleUpdateFood}>
-                    <label htmlFor="title">Titre</label>
-                    <input
-                        id="title"
-                        type="text"
-                        name="title"
-                        placeholder="Nom du plat"
-                        value={editableFood.title}
-                        onChange={handleInputChange}
-                    />
-                    <label htmlFor="description">Description</label>
-                    <input
-                        id="description"
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        value={editableFood.description}
-                        onChange={handleInputChange}
-                    />
-                    <label htmlFor="category">Catégorie</label>
-                    <select name="category" value={editableFood.category} onChange={handleInputChange} id="category">
-                        <option value="">Sélectionnez une option</option>
-                        <option value="Entrées">Entrées</option>
-                        <option value="Plat chaud">Plat chaud</option>
-                        <option value="Sushi">Sushi</option>
-                        <option value="Yakitori">Yakitori</option>
-                    </select>
-                    <label htmlFor="price">Prix</label>
-                    <input
-                        id="price"
-                        type="text"
-                        name="price"
-                        placeholder="Prix"
-                        value={editableFood.price}
-                        onChange={handleInputChange}
-                    />
-                    <input
-                        type="file"
-                        name="image"
-                        placeholder="image"
-                        value={editableFood.image}
-                        onChange={handleInputChange}
-                    />
+                    ))}
+                </div>
+                <div className="container-btn-update"><button className="btn-update" type="submit">Mettre à jour les produits</button></div>
+            </form>
 
-                    <button type="submit">Mettre à jour</button>
-                    <button type="button" onClick={() => setEditableFood(null)}>Annuler</button>
-                </form>
-            </div>
-        )}
-            </div>
             <div className="pagination">
-            {[...Array(pageCount)].map((_, index) => (
-                <button
-                    key={index}
-                    onClick={() => paginate(index + 1)}
-                    className={currentPage === index + 1 ? 'active' : ''}
-                >
-                    {index + 1}
-                </button>
-            ))}
-        </div>
+                {[...Array(pageCount)].map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => paginate(index + 1)}
+                        className={currentPage === index + 1 ? 'active' : ''}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 }

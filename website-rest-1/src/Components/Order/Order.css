@@ -20,4 +20,10 @@
 .info-total-order{
     display: flex;
     justify-content: space-between;
+    border: 2px solid red;
+}
+
+.order-info-client p{
+    font-size: clamp(1rem,1.04vw,1.25rem);
+    border: 2px solid red;
 }

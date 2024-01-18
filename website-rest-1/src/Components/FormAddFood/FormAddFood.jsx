@@ -83,18 +83,21 @@ function AddFoodForm() {
         <h1 className='h1FormAdd'>Ajouter un produit</h1>
         <div className='container-formaddfood'>
             <form onSubmit={handleSubmit}>
-                <input className="input-title-food" type="text" name="title" placeholder='Nom du produit' value={title} onChange={handleTitleChange} required/>
-                <textarea className="input-description-food" name="description" placeholder='Description du produit' value={description} onChange={handleDescriptionChange} rows={4} required/>
-                <select name="category" value={category} onChange={handleSelectChange}>
-                    <option value="">Sélectionnez une option</option>
-                    <option value="Entrées">Entrées</option>
-                    <option value="Plat chaud">Plat chaud</option>
-                    <option value="Sushi">Sushi</option>
-                    <option value="Yakitori">Yakitori</option>
-                </select>
-                <input className='input-price-food' type="text" name="price" placeholder='Prix' value={price} onChange={handlePriceChange} required/>
-                <input type="file" name="image" onChange={handleImageChange} required/>
-                <div className='container-btn-form-add'><button type="submit">Ajouter Plat</button></div>
+                <div className='container-input-form'>
+                    <input className="input-title-food" type="text" name="title" placeholder='Nom du produit' value={title} onChange={handleTitleChange} required/>
+                    <textarea className="input-description-food" name="description" placeholder='Description du produit' value={description} onChange={handleDescriptionChange} rows={4} required/>
+                    <select name="category" value={category} onChange={handleSelectChange}>
+                        <option value="">Sélectionnez une option</option>
+                        <option value="Entrées">Entrées</option>
+                        <option value="Plat chaud">Plat chaud</option>
+                        <option value="Sushi">Sushi</option>
+                        <option value="Yakitori">Yakitori</option>
+                    </select>
+                    <input className='input-price-food' type="text" name="price" placeholder='Prix' value={price} onChange={handlePriceChange} required/>
+                    <label className='addImg' htmlFor="addImg">Ajouter une image</label>
+                    <input style={{display :"none"}} id='addImg' type="file" name="image" onChange={handleImageChange} required/>
+                    <div className='container-btn-form-add'><button type="submit">Ajouter Plat</button></div>
+                </div>
             </form>
 
             <div className='container-visual-food'>
