@@ -3,25 +3,41 @@ import { apiService } from '../../API/apiService';
 import './Cards.css';
 
 function Cards() {
-    const [isExpanded, setIsExpanded] = useState(false);
     const [foods, setFoods] = useState([]);
+    const [editableFoods, setEditableFoods] = useState({});
     const [selectedCategory, setSelectedCategory] = useState('Tous');
+    const [categories, setCategories] = useState([]); // État pour les catégories
     const [currentPage, setCurrentPage] = useState(1);
-    const [width] = useWindowSize();
-    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 790);
+    const [itemsPerPage, setItemsPerPage] = useState(isSmallScreen ? 6 : 10);
 
     useEffect(() => {
-        const fetchFoods = async () => {
+        const fetchFoodsAndCategories = async () => {
             try {
                 const fetchedFoods = await apiService.getFoods();
+                const fetchedCategories = await apiService.getAllCategories();
                 setFoods(fetchedFoods);
+                setCategories(fetchedCategories); // Stocker les catégories récupérées
             } catch (error) {
-                console.error("Erreur lors de la récupération des plats :", error);
+                console.error("Erreur lors de la récupération des données :", error);
             }
         };
 
-        fetchFoods();
+        fetchFoodsAndCategories();
+        
+        const handleResize = () => {
+            const smallScreen = window.innerWidth <= 790;
+            setIsSmallScreen(smallScreen);
+            setItemsPerPage(smallScreen ? 6  : 10);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
+
 
     const addToLocalStorage = (food) => {
         // Récupérer la liste des plats stockés ou initialiser un tableau vide si ce n'est pas le cas
@@ -67,40 +83,16 @@ function Cards() {
     // Calculer le nombre de pages
     const pageCount = Math.ceil(filteredFoods.length / itemsPerPage);
 
-    function useWindowSize() {
-        const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
     
-        useEffect(() => {
-            const handleResize = () => {
-                setSize([window.innerWidth, window.innerHeight]);
-            };
-    
-            window.addEventListener('resize', handleResize);
-            return () => {
-                window.removeEventListener('resize', handleResize);
-            };
-        }, []);
-    
-        return size;
-    }
-    
-    useEffect(() => {
-        setItemsPerPage(width <= 850 ? 5 : 10);
-    }, [width]);
 
     return (
         <div className="container-cards" id="card">
             <h1 className="cards-title">Notre carte</h1>
             <div className="navigation-cards">
-            <select
-                className="navigation-cards-ul"
-                onChange={(e) => handleCategoryClick(e.target.value)}
-                value={selectedCategory}
-            >
-                {['Tous', 'Entrées', 'Plats chauds', 'Sushis', 'Yakitoris', 'Desserts'].map((category) => (
-                    <option key={category} value={category}>
-                        {category}
-                    </option>
+            <select value={selectedCategory} onChange={(e) => handleCategoryClick(e.target.value)}>
+                <option value="Tous">Tous</option>
+                {categories.map((category) => (
+                    <option key={category.id} value={category.name}>{category.name}</option>
                 ))}
             </select>
             </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { apiService } from '../../API/apiService';
 import './CardsAdmin.css';
+import SectionCategories from "../SectionCategories/SectionCategories";
 
 function Cards() {
     const [foods, setFoods] = useState([]);
@@ -9,9 +10,22 @@ function Cards() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 790);
     const [itemsPerPage, setItemsPerPage] = useState(isSmallScreen ? 6 : 10);
+    const [categories, setCategories] = useState([]); // État pour stocker les catégories
 
+    useEffect(() => {
+        // Charger les catégories lors du montage du composant
+        const fetchCategories = async () => {
+            try {
+                const fetchedCategories = await apiService.getAllCategories();
+                setCategories(fetchedCategories);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des catégories:', error);
+            }
+        };
 
-    console.log(editableFoods, foods);
+        fetchCategories();
+    }, []);
+
 
     useEffect(() => {
         const fetchFoods = async () => {
@@ -27,7 +41,7 @@ function Cards() {
         fetchFoods();
         
         const handleResize = () => {
-            const smallScreen = window.innerWidth <= 790;
+            const smallScreen = window.innerWidth <= 890;
             setIsSmallScreen(smallScreen);
             // Mise à jour du nombre d'articles par page en fonction de la taille de l'écran
             setItemsPerPage(smallScreen ? 6  : 10);
@@ -166,13 +180,13 @@ function Cards() {
                             />
                             <select
                                 name="category"
-                                value={editableFoods[food.id]?.category !== undefined ? editableFoods[food.id]?.category : food.category} // Utilisez la catégorie de food comme valeur par défaut
+                                value={editableFoods[food.id]?.category !== undefined ? editableFoods[food.id]?.category : food.category}
                                 onChange={(e) => handleInputChange(food.id, e)}
                             >
-                                <option value="Plat chaud">Plat chaud</option>
-                                <option value="Entrées">Entrées</option>
-                                <option value="Dessert">Dessert</option>
-                                {/* Ajoutez d'autres options de catégorie au besoin */}
+                                <option value="">Sélectionnez une catégorie</option>
+                                {categories.map((category) => (
+                                    <option key={category.id} value={category.name}>{category.name}</option>
+                                ))}
                             </select>
                             <input
                                 className="input-price"
@@ -202,6 +216,8 @@ function Cards() {
                     </button>
                 ))}
             </div>
+
+            <SectionCategories/>
         </div>
     );
 }

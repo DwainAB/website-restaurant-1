@@ -9,9 +9,17 @@ function Navbar() {
     const [navbarVisible, setNavbarVisible] = useState(false)
     const [loginVisible, setLoginVisible] = useState(false);
     const [basketVisible, setBasketVisible] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState({ role: null });
     const [formVisible, setFormVisible] = useState(false);
+    const [formConnect, setFormConnect] = useState(false)
     const [totalPrice, setTotalPrice] = useState(0); // Ajouter un état pour le prix total
     const [cartItems, setCartItems] = useState([]);
+    const [loginCredentials, setLoginCredentials] = useState({
+        email: '',
+        password: ''
+    });
+    
     const [clientData, setClientData] = useState({ // Ajoutez un état pour les données du formulaire client
         firstname: "",
         lastname: "",
@@ -24,7 +32,42 @@ function Navbar() {
         // Récupérer les articles du panier lors du montage du composant
         const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
         setCartItems(storedCartItems);
+    
+        // Vérifier si l'utilisateur est déjà connecté
+        const storedUser = localStorage.getItem('user');
+        const storedToken = localStorage.getItem('token');
+        if (storedUser && storedToken) {
+            setUser(JSON.parse(storedUser)); // S'assurer de convertir la chaîne en objet
+            setIsAuthenticated(true);
+        }
     }, []);
+    
+
+    const handleLogin = async (event) => {
+        console.log("Attempting to login with:", loginCredentials);
+        event.preventDefault(); // Empêcher le comportement par défaut du formulaire
+        try {
+            const data = await apiService.login(loginCredentials);
+            if (data.token) {
+                // Stocker le token et les informations de l'utilisateur dans le localStorage
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user)); // Stocker l'objet utilisateur sous forme de chaîne
+    
+                // Mettre à jour l'état pour refléter que l'utilisateur est connecté
+                setIsAuthenticated(true);
+                setUser(data.user);
+    
+                // Fermer le formulaire de connexion
+                setFormConnect(false);
+            } else {
+                // Gérer l'erreur de connexion ici
+                console.error('Échec de la connexion :', data.error);
+            }
+        } catch (error) {
+            console.error('Erreur lors de la connexion :', error);
+        }
+    };
+    
 
     useEffect(() => {
         // Calculer le prix total lorsque le panier est mis à jour
@@ -97,6 +140,7 @@ function Navbar() {
 
     const activateNavbar = () =>{
         setNavbarVisible(!navbarVisible)
+        handleButtonClick()
     }
 
     const activateNavAndBasket = () =>{
@@ -121,7 +165,24 @@ function Navbar() {
             }
         }
     }, [basketVisible]);
+
+    const handleLogoutClick = () => {
+        setIsAuthenticated(false);
+        setUser({ role: null });
+        localStorage.removeItem('token'); // Supprimez le token
+        localStorage.removeItem('user'); // Supprimez les informations de l'utilisateur
+    };
     
+
+    const formConnectVisible = () =>{
+        setFormConnect(!formConnect);
+    }
+
+    const handleLoginChange = (event) => {
+        const { name, value } = event.target;
+        setLoginCredentials({ ...loginCredentials, [name]: value });
+        console.log("Updated Login Credentials:", loginCredentials);
+    };
 
     
     return (
@@ -153,9 +214,42 @@ function Navbar() {
 
                 <div className="logout" style={{ display: loginVisible ? 'block' : 'none' }}>
                     <div className="logout-btns">
-                        <a className="adminpage-btn" href="/admin-page">Page admin</a>
-                        <button className='logout-btn' onClick={handleLogout}>Déconnexion</button>
+                        {/* Affichez le bouton 'Page Admin' uniquement si l'utilisateur est authentifié et est un admin */}
+                        {isAuthenticated && user.role === 'Admin' && (
+                            <a className="adminpage-btn" href="/admin-page">Page admin</a>
+                        )}
+                        {/* Affichez le bouton 'Déconnexion' uniquement si l'utilisateur est authentifié */}
+                        {isAuthenticated && (
+                            <button className='logout-btn' onClick={handleLogoutClick}>Déconnexion</button>
+                        )}
+                        {/* Affichez le bouton 'Connexion' uniquement si l'utilisateur n'est pas authentifié */}
+                        {!isAuthenticated && (
+                            <button className='login-btn' onClick={formConnectVisible}>Connexion</button>
+                        )}
                     </div>
+                </div>
+
+                <div style={{ display: formConnect ? "block" : "none"}} className="container-form-connexion">
+                    <h2 style={{color: "#fff"}}>Connectez-vous</h2>
+                    <form onSubmit={handleLogin}>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            name="email"
+                            value={loginCredentials.email}
+                            onChange={handleLoginChange}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Mot de passe"
+                            name="password"
+                            value={loginCredentials.password}
+                            onChange={handleLoginChange}
+                            required
+                        />
+                        <input type="submit" value="Se connecter" />
+                    </form>
                 </div>
          
 

@@ -1,0 +1,134 @@
+.list-users{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.user-info{
+    display: flex;
+    gap: clamp(0px,1.56vw,30px);
+}
+
+.user-info input{
+    height: 30px;
+}
+
+.user-info button{
+    border: 2px solid red;
+    border-radius: 50%;
+    background-color: #fff;
+    color: red;
+    height: 30px;
+    width: 30px;
+    transition: all 0.3s;
+}
+.user-info button:hover{
+    background-color: red;
+    color: #fff;
+}
+
+.user-info-firstname, .user-info-lastname, .user-info-tel, .user-info-role{
+    width: 120px;
+}
+
+.user-info-email, .input-add-user-email, .input-add-user-address{
+    width: 220px;
+}
+
+.btn-update-user{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-color: #fff;
+    border: 2px solid #FF9A00;
+    border-radius: 20px;
+    height: 30px;
+    width: 130px;
+    transition: all 0.3s;
+}
+.btn-update-user:hover, .container-form-add-user form button:hover{
+    background-color: #FF9A00; 
+    color: #fff;
+}
+
+.container-form-add-user form button{
+    background-color: #fff;
+    border: 2px solid #FF9A00;
+    border-radius: 20px;
+    height: 30px;
+    transition: all 0.3s;
+}
+
+.container-btn-update-user{
+    display: flex;
+    justify-content: center;
+}
+
+.container-form-add-user form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    margin-top: 50px;
+}
+.container-form-add-user form input,.container-form-add-user form select, .container-form-add-user form button {
+    height: 30px;
+}
+
+.container-add-user-section-top, .container-add-user-section-bottom{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media screen and (max-width:1120px) {
+    .user-info{
+        flex-direction: column;
+    }
+
+    .user-info input, .user-info select{
+        width: 100%;
+    }
+
+    .list-users{
+        flex-direction: row ;
+        gap: 50px;
+    }
+
+    .user-info button{
+        width: 100%;
+        border-radius: 20px;
+    }
+}
+
+@media screen and (max-width:610px) {
+    .container-form-add-user form{
+        justify-content: center;
+        gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container-form-add-user form input, .container-form-add-user form select{
+        width: 250px;
+    }
+
+    .container-add-user-section-bottom button{
+        width: 250px;
+    }
+
+    .title-user{
+        text-align: center;
+    }
+
+    .list-users{
+        gap: 20px!important;
+    }
+
+
+}
+
+@media screen and (max-width: 672px) {
+    .list-users{
+        justify-content: space-around;
+        gap: 5px;
+    }
+}

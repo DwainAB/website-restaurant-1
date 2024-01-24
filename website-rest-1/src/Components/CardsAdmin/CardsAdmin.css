@@ -204,7 +204,7 @@
 }
 
 
-@media screen and (max-width:790px) {
+@media screen and (max-width:890px) {
     .list-product{
         display: flex;
         flex-wrap: wrap;

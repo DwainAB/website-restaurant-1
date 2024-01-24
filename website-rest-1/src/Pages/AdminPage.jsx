@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddFoodForm from "../Components/FormAddFood/FormAddFood";
 import Cards from "../Components/CardsAdmin/CardsAdmin";
 import CardsOrders from "../Components/CardOrders/CardOrders";
+import Utilisateur from "../Components/Utilisateur/Utilisateur";
 
 function AdminPage() {
     const [selectedComponent, setSelectedComponent] = useState("addFood");
@@ -18,6 +19,8 @@ function AdminPage() {
                 return <Cards />;
             case "cardsOrders":
                 return <CardsOrders />;
+            case "Utilisateur":
+                return <Utilisateur />;
             default:
                 return null;
         }
@@ -29,6 +32,7 @@ function AdminPage() {
                 <option value="addFood">Ajouter un produit</option>
                 <option value="cards">Cartes</option>
                 <option value="cardsOrders">Commandes</option>
+                <option value="Utilisateur">Utilisateur</option>
             </select>
             {renderComponent()}
         </div>

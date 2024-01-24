@@ -93,17 +93,18 @@ li{
 
 .logout{
     position: absolute;
-    top: 120px;
-    left: 82%;
+    top: 110px;
+    right: 90px;
     display: flex;
-    width: 250px;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .logout-btns{
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
+    gap: 30px;
+    width: max-content;
 }
 
 .adminpage-btn{
@@ -115,7 +116,7 @@ li{
     text-decoration: none;
 }
 
-.logout-btn{
+.logout-btn, .login-btn{
     border: 0;
     background-color: #FF9A00;
     color: white;
@@ -143,6 +144,39 @@ li{
 
 .sup{
     display: none;
+}
+
+.container-form-connexion{
+    position: absolute;      
+    top: 50%;               
+    left: 50%;              
+    transform: translate(-50%, -50%);
+    background-color: #FF9A00;
+    padding: 20px;
+    border: 2px solid #fff;
+}
+
+.container-form-connexion form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-form-connexion form input{
+    height: 30px;
+    border: 0;
+}
+
+.container-form-connexion form input[type=submit]{
+    color: #FF9A00;
+    background-color: #fff;
+    border: 0;
+    height: 30px;
+    border-radius: 20px;
+    font-weight: 500;
+    margin-top: 30px;
 }
 
 .container-basket-close{
@@ -400,7 +434,7 @@ input[type=submit]{
             color: #fff;
             padding: 0;
             width: 100px;
-            margin-bottom: 40px;
+            margin-bottom: 65px;
         }
 
         .action{
@@ -421,6 +455,14 @@ input[type=submit]{
             color: #fff;
             border: 2px solid white;
             border-radius: 50%;
+        }
+
+        .logout{
+            top: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: transparent;
+            border: 0;
         }
         
    }

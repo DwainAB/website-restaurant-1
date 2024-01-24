@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { apiService } from '../../API/apiService'; 
 import "./FormAddFood.css"
 import "../Cards/Cards.css"
@@ -10,7 +10,21 @@ function AddFoodForm() {
     const [imageURL, setImageURL] = useState(null);
     const [image, setImage] = useState(null);
     const [category, setCategory] = useState(""); // État pour stocker la valeur sélectionnée
+    const [categories, setCategories] = useState([]); // État pour stocker les catégories
 
+    useEffect(() => {
+        // Charger les catégories lors du montage du composant
+        const fetchCategories = async () => {
+            try {
+                const fetchedCategories = await apiService.getAllCategories();
+                setCategories(fetchedCategories);
+            } catch (error) {
+                console.error('Erreur lors de la récupération des catégories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -87,11 +101,10 @@ function AddFoodForm() {
                     <input className="input-title-food" type="text" name="title" placeholder='Nom du produit' value={title} onChange={handleTitleChange} required/>
                     <textarea className="input-description-food" name="description" placeholder='Description du produit' value={description} onChange={handleDescriptionChange} rows={4} required/>
                     <select name="category" value={category} onChange={handleSelectChange}>
-                        <option value="">Sélectionnez une option</option>
-                        <option value="Entrées">Entrées</option>
-                        <option value="Plat chaud">Plat chaud</option>
-                        <option value="Sushi">Sushi</option>
-                        <option value="Yakitori">Yakitori</option>
+                    <option value="">Sélectionnez une option</option>
+                            {categories.map((category) => (
+                                <option key={category.id} value={category.name}>{category.name}</option>
+                            ))}
                     </select>
                     <input className='input-price-food' type="text" name="price" placeholder='Prix' value={price} onChange={handlePriceChange} required/>
                     <label className='addImg' htmlFor="addImg">Ajouter une image</label>

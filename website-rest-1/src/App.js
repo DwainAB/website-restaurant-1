@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar/Navbar'
 import Footer from "./Components/Footer/Footer";
 import AdminPage from "./Pages/AdminPage"
 import BasketPage from "./Pages/BasketPage";
+import ProtectedRoute from "./Components/pathProtected/pathProtected";
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
           <Navbar/>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/admin-page" element={<AdminPage/>}/>
+            <Route 
+                    path="/admin-page" 
+                    element={
+                        <ProtectedRoute roleRequired="Admin">
+                            <AdminPage />
+                        </ProtectedRoute>
+                    } 
+                />            
             <Route path="/basket" element={<BasketPage/>}/>
           </Routes>
         </div>
