@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost/back-website-restaurant-1/api'; 
+//const BASE_URL = 'http://localhost/back-website-restaurant-1/api'; 
+const BASE_URL = 'https://wok-grill.000webhostapp.com/back-website-restaurant-1/api'; 
 
 export const apiService = {
 
