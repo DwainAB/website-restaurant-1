@@ -2,6 +2,12 @@ body{
     overflow-x: hidden;
 }
 
+.error-message{
+    color: #fff;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
 li{
     list-style: none;
 }
@@ -281,7 +287,7 @@ li{
     gap: 20px;
 }
 
-.container-basket-form input{
+.container-basket-form input, .container-basket-form select{
     width: 320px;
     height: 50px;
     border-radius: 20px;
@@ -382,6 +388,29 @@ input[type=submit]{
    .btn-close-menu, .container-btn-close-menu{
     display: none;
    }
+
+   .container-basket-button button:disabled {
+    background-color: #cccccc; 
+    color: #666666; 
+    cursor: not-allowed; 
+    border: 1px solid #999999; 
+}
+
+.container-basket-button button:disabled:hover {
+    background-color: #cccccc; 
+    color: #666666; 
+    border: 1px solid #999999; 
+}  
+.container-basket-button button:disabled::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: #666666!important;
+    height: 0px;
+    width: 0px;
+    border-radius: 50%;
+   }
+
    @media screen and (max-width: 1025px) {
 
     .container-nav-mobil{
@@ -464,7 +493,16 @@ input[type=submit]{
             background-color: transparent;
             border: 0;
         }
+
+        .logout{
+            width: 255px;
+            text-align: -webkit-center;
+        }
         
+        .logout-btns a, .logout-btns button{
+            font-weight: 700;
+            font-size: 16px;
+        }
    }
 
    @media screen and (max-width: 825px) {

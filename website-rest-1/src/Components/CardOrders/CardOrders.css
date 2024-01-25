@@ -72,6 +72,40 @@
     font-size: clamp(1.2rem,2.08vw,1.5rem);
 }
 
+#filter-order{
+    border: 2px solid #FF9A00;
+    height: 30px;
+    border-radius: 20px;
+    width: 150px;
+    text-align: center;
+    color: #FF9A00;
+}
+#filter-order:hover{
+    cursor: pointer;
+}
+
+.container-filter-order{
+    display: flex;
+    justify-content: center;
+}
+
+.page-item button{
+    transition: all 0.3s;
+}
+
+.page-item button:hover{
+    background-color: #FF9A00;
+    color: #fff;
+}
+
+.container-title-card-order{
+    display: flex;
+    justify-content: space-between;
+}
+.container-title-card-order p{
+    font-weight: bold;
+}
+
 @media screen and (max-width: 750px) {
     .section-card-order{
         flex-direction:column-reverse;

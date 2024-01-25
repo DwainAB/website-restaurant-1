@@ -15,6 +15,7 @@ function Navbar() {
     const [formConnect, setFormConnect] = useState(false)
     const [totalPrice, setTotalPrice] = useState(0); // Ajouter un état pour le prix total
     const [cartItems, setCartItems] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
     const [loginCredentials, setLoginCredentials] = useState({
         email: '',
         password: ''
@@ -25,7 +26,8 @@ function Navbar() {
         lastname: "",
         email: "",
         phone: "",
-        address: ""
+        address: "",
+        method: ""
     });
 
     useEffect(() => {
@@ -61,6 +63,7 @@ function Navbar() {
                 setFormConnect(false);
             } else {
                 // Gérer l'erreur de connexion ici
+                setErrorMessage('Mail ou mot de passe incorect');
                 console.error('Échec de la connexion :', data.error);
             }
         } catch (error) {
@@ -117,6 +120,9 @@ function Navbar() {
                 cartItems: storedCartItems
             };
 
+            console.log('Order data before sending:', orderData); // Vérifiez les données avant l'envoi
+
+
             await apiService.addClientAndOrder(orderData);
 
             setClientData({
@@ -124,7 +130,8 @@ function Navbar() {
                 lastname: "",
                 email: "",
                 phone: "",
-                address: ""
+                address: "",
+                method: ""
             });
 
             setFormVisible(false);
@@ -250,6 +257,7 @@ function Navbar() {
                         />
                         <input type="submit" value="Se connecter" />
                     </form>
+                    {errorMessage && <div className="error-message">{errorMessage}</div>}
                 </div>
          
 
@@ -271,6 +279,12 @@ function Navbar() {
                         <input type="email" placeholder="email" name="email" value={clientData.email} onChange={handleFormChange} />
                         <input type="tel" placeholder="tel" name="phone" value={clientData.phone} onChange={handleFormChange} />
                         <input type="text" placeholder="adresse" name="address" value={clientData.address} onChange={handleFormChange} />
+                        <select name="method" value={clientData.method} onChange={handleFormChange}>
+                            <option value="">Choisissez une option</option>
+                            <option value="A emporter">A emporter</option>
+                            <option value="Livraison">Livraison</option>
+                        </select>
+
                         <input type="submit" />
                     </form>
                     </div>
@@ -298,7 +312,7 @@ function Navbar() {
 
                 <hr />
                 <div className="container-basket-button">
-                    <button onClick={showForm}>{formVisible ? "Retour" : "Commander"}</button>
+                    <button onClick={showForm} disabled={cartItems.length === 0}>{formVisible ? "Retour" : "Suivant"}</button>
                     <button onClick={activateBasket}>Retour</button>
                 </div>
             </div>

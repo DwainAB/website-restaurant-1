@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { apiService } from "../../API/apiService";
-import "./CardOrders.css"
+import "./CardOrders.css";
 
 function CardsOrders() {
     const [orders, setOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [ordersPerPage] = useState(4);
+    const [filter, setFilter] = useState('Tous');
 
     useEffect(() => {
         fetchOrders();
     }, []);
 
-    console.log(orders);
+    useEffect(() => {
+        const newFilteredOrders = orders.filter(order => {
+            if (filter === 'Tous') return true;
+            return order.client_method === filter;
+        });
+        setFilteredOrders(newFilteredOrders);
+        setCurrentPage(1);
+    }, [orders, filter]);
+
     const fetchOrders = async () => {
         try {
             const ordersData = await apiService.getAllOrdersAndClients();
@@ -22,10 +34,10 @@ function CardsOrders() {
                         return acc + (price * quantity);
                     }, 0);
                     return { ...order, orders: parsedOrders, total };
-                }catch (error) {
+                } catch (error) {
                     console.error('Erreur lors du traitement JSON pour la commande:', order);
                     console.error('Détail de l\'erreur:', error);
-                    console.error('JSON brut:', order.orders); // Imprimez la chaîne JSON brute pour examen
+                    console.error('JSON brut:', order.orders);
                     return { ...order, orders: null, total: 0 };
                 }
             });
@@ -33,30 +45,53 @@ function CardsOrders() {
         } catch (error) {
             console.error('Erreur lors de la récupération des commandes:', error);
         }
-    }
-    
+    };
 
     const handleDelete = async (clientId) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce client et toutes ses commandes ?")) {
             try {
                 await apiService.deleteClient(clientId);
                 alert("Client et commandes supprimés avec succès");
-                fetchOrders(); // Recharger les commandes après la suppression
-                window.location.reload()
+                fetchOrders();
             } catch (error) {
                 console.error('Erreur lors de la suppression du client:', error);
-                window.location.reload()
             }
         }
-    }
+    };
+
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    };
+
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <>
             <h2 className="title-order">Commande en cours</h2>
+
+            <div className="container-filter-order">
+                <select 
+                    name="filter-order" 
+                    id="filter-order" 
+                    onChange={handleFilterChange}
+                >
+                    <option value="Tous">Tous</option>
+                    <option value="A emporter">A emporter</option>
+                    <option value="Livraison">Livraison</option>
+                </select>
+            </div>
+
             <div className="container-card-order">
-                {orders.length > 0 ? orders.map(order => (
+                {currentOrders.length > 0 ? currentOrders.map(order => (
                     <div key={order.client_id} className="card-order">
-                        <h2>Commande #{order.client_id}</h2>
+                        <div className="container-title-card-order">
+                            <h2>Commande #{order.client_id}</h2>
+                            <p>{order.client_method}</p>
+                        </div>
 
                         <div className="section-card-order">
                             <div className="order">
@@ -81,6 +116,18 @@ function CardsOrders() {
                     </div>
                 )) : <p className="text-empty-order">Aucune commande trouvée.</p>}
             </div>
+
+            <nav>
+                <ul className='pagination'>
+                    {Array.from({ length: Math.ceil(filteredOrders.length / ordersPerPage) }, (_, i) => i + 1).map(number => (
+                        <li key={number} className='page-item'>
+                            <button onClick={() => paginate(number)} className='page-link'>
+                                {number}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
         </>
     );
 }
