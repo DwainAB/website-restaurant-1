@@ -71,12 +71,15 @@ function Utilisateur() {
             }
     
             try {
-                const response = await apiService.updateUser(userId, formData);
-                if (response.success) {
-                    console.log('Mise à jour réussie', response.message);
-                    isUpdated = true;
+                const response = await apiService.addUser(formData);
+                if (!response.ok) {
+                    const errorResponse = await response.json();
+                    console.error('Erreur lors de l\'ajout de l\'utilisateur', errorResponse.error);
+                    // Gérer l'erreur ici
                 } else {
-                    console.error('Erreur lors de la mise à jour', response.message);
+                    const data = await response.json();
+                    console.log('Réponse de l\'API:', data);
+                    // Gérer la réponse de succès ici
                 }
             } catch (error) {
                 console.error('Erreur lors de l\'envoi à l\'API', error);
