@@ -12,7 +12,7 @@ function Review() {
         const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`;
 
 
-        fetch('http://localhost/back-website-restaurant-1/services/googlePlacesProxy.php?placeId=ChIJE9HLgd0S5kcRjqY585LUGjg')
+        fetch('https://wok-grill.000webhostapp.com/back-website-restaurant-1/services/googlePlacesProxy.php?placeId=ChIJE9HLgd0S5kcRjqY585LUGjg')
         .then(response => response.json())
         .then(data => {
             setReviews(data.result.reviews)
