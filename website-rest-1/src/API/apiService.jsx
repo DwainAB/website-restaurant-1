@@ -148,9 +148,10 @@ export const apiService = {
                 },
                 body: JSON.stringify(credentials),
             });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        } else {
             return await response.json();
-        } catch (error) {
-            throw error;
         }
     },
 
