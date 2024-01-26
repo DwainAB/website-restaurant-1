@@ -141,7 +141,7 @@ export const apiService = {
 
     login: async (credentials) => {
         try {
-            const response = await fetch(`${BASE_URL}/users/test`, {
+            const response = await fetch(`${BASE_URL}/foods/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
