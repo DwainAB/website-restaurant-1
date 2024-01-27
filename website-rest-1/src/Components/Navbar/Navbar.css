@@ -201,7 +201,7 @@ li{
 
 .container-basket>span, .container-basket-close>span{
     position: absolute;
-    top: 1vw;
+    top: 20px;
     left: 25px;
     font-size: clamp(1.5rem,1.5vw,2rem);
     color: #FF9A00;
@@ -289,7 +289,7 @@ li{
 
 .container-basket-form input, .container-basket-form select{
     width: 320px;
-    height: 50px;
+    height:  2.6em;
     border-radius: 20px;
     border: 2px solid #FF9A00;
     padding-left: 20px;
@@ -309,6 +309,7 @@ input[type=submit]{
     background-color: #FF9A00;
     color: #fff;
     width: 150px;
+    margin-bottom: 50px;
 }
 
 .basket-empty{

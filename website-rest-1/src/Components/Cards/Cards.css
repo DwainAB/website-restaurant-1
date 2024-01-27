@@ -227,5 +227,11 @@
     }
 }
 
+@media screen and (max-width: 1025px) {
+    .navigation-cards select{
+        margin: 0 auto;
+    }
+}
+
 
 

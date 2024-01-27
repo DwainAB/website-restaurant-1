@@ -137,9 +137,8 @@ function Navbar() {
             setFormVisible(false);
 
             alert("Votre commande à bien été envoyé !");
-
-            // Supprimer le contenu du localStorage
             localStorage.removeItem('cartItems');
+            window.location.reload()
         } catch (error) {
             console.error("Erreur lors de l'envoi du formulaire client : ", error);
         }

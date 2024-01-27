@@ -126,4 +126,13 @@
         max-height: 200px;
         overflow: auto;
     }
+
+    .card-order h2{
+        margin: 00;
+    }
+
+    .container-title-card-order{
+        flex-direction: column;
+        gap: 0;
+    }
 }
