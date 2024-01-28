@@ -69,17 +69,21 @@ function Utilisateur() {
             for (const key in userData) {
                 formData.append(key, userData[key]);
             }
-
             try {
                 const response = await apiService.updateUser(userId, formData);
-                if (response.success) {
-                    console.log('Mise à jour réussie', response.message);
-                    isUpdated = true;
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Réponse de l\'API:', data);
+                    isUpdated = true; // Indique qu'au moins un utilisateur a été mis à jour avec succès
+                    // Gérer la réponse de succès ici
                 } else {
-                    console.error('Erreur lors de la mise à jour', response.message);
+                    const errorResponse = await response.json();
+                    console.error('Erreur lors de la mise à jour de l\'utilisateur', errorResponse);
+                    // Gérer l'erreur ici, si nécessaire
                 }
             } catch (error) {
                 console.error('Erreur lors de l\'envoi à l\'API', error);
+                // Gérer l'erreur ici
             }
         }
 
