@@ -99,7 +99,7 @@ function Cards() {
             <div className="global-cards">
                 {currentFoods.map((food) => (
                     <div className="card" key={food.id}>
-                        <img className="card-img" src={`https://wok-grill.000webhostapp.com/back-website-restaurant-1/${food.image}`} alt={food.title} />
+                        <img className="card-img" src={`https://back-wok-rosny.onrender.com/${food.image}`} alt={food.title} />
                         <h2 className="card-title">{food.title}</h2>
                         <div className="card-separator"></div>
                         <div className="card-info">
