@@ -119,12 +119,27 @@ function Navbar() {
                 ...clientData,
                 cartItems: storedCartItems
             };
-
+    
             console.log('Order data before sending:', orderData); // Vérifiez les données avant l'envoi
-
-
-            await apiService.addClientAndOrder(orderData);
-
+    
+            const response = await apiService.addClientAndOrder(orderData);
+    
+            // Après l'ajout du client et de la commande, envoyez l'e-mail de confirmation
+            const emailResponse = await fetch('http://votre-domaine.com/api/sendConfirmationEmail.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    email: clientData.email,
+                    firstName: clientData.firstname,
+                    lastName: clientData.lastname
+                })
+            });
+    
+            const emailData = await emailResponse.text();
+            console.log(emailData); // Log la réponse de l'API e-mail pour débogage
+    
             setClientData({
                 firstname: "",
                 lastname: "",
@@ -133,9 +148,9 @@ function Navbar() {
                 address: "",
                 method: ""
             });
-
+    
             setFormVisible(false);
-
+    
             alert("Votre commande à bien été envoyé !");
             localStorage.removeItem('cartItems');
             window.location.reload()
@@ -143,6 +158,7 @@ function Navbar() {
             console.error("Erreur lors de l'envoi du formulaire client : ", error);
         }
     };
+    
 
     const activateNavbar = () =>{
         setNavbarVisible(!navbarVisible)
