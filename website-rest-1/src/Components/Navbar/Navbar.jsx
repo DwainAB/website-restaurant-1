@@ -16,11 +16,6 @@ function Navbar() {
     const [totalPrice, setTotalPrice] = useState(0); // Ajouter un état pour le prix total
     const [cartItems, setCartItems] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
-    const [loginCredentials, setLoginCredentials] = useState({
-        email: '',
-        password: ''
-    });
-    
     const [clientData, setClientData] = useState({ // Ajoutez un état pour les données du formulaire client
         firstname: "",
         lastname: "",
@@ -29,6 +24,38 @@ function Navbar() {
         address: "",
         method: ""
     });
+
+    const handleLogin = async (e) => {
+        e.preventDefault(); // Empêcher la soumission normale du formulaire
+    
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+    
+        try {
+            const response = await fetch("https://cross-ply-dominion.000webhostapp.com/api/users/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
+            });
+    
+            const data = await response.json();
+    
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                setIsAuthenticated(true);
+                setUser(data.user);
+                setErrorMessage(''); // Réinitialiser le message d'erreur
+            } else {
+                setErrorMessage(data.error || 'Une erreur est survenue');
+            }
+        } catch (error) {
+            console.error("Erreur lors de la connexion : ", error);
+            setErrorMessage('Erreur de connexion');
+        }
+    };
 
     useEffect(() => {
         // Récupérer les articles du panier lors du montage du composant
@@ -43,33 +70,6 @@ function Navbar() {
             setIsAuthenticated(true);
         }
     }, []);
-    
-
-    const handleLogin = async (event) => {
-        console.log("Attempting to login with:", loginCredentials);
-        event.preventDefault(); // Empêcher le comportement par défaut du formulaire
-        try {
-            const data = await apiService.login(loginCredentials);
-            if (data.token) {
-                // Stocker le token et les informations de l'utilisateur dans le localStorage
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user)); // Stocker l'objet utilisateur sous forme de chaîne
-    
-                // Mettre à jour l'état pour refléter que l'utilisateur est connecté
-                setIsAuthenticated(true);
-                setUser(data.user);
-    
-                // Fermer le formulaire de connexion
-                setFormConnect(false);
-            } else {
-                // Gérer l'erreur de connexion ici
-                setErrorMessage('Mail ou mot de passe incorect');
-                console.error('Échec de la connexion :', data.error);
-            }
-        } catch (error) {
-            console.error('Erreur lors de la connexion :', error);
-        }
-    };
     
 
     useEffect(() => {
@@ -183,13 +183,6 @@ function Navbar() {
     const formConnectVisible = () =>{
         setFormConnect(!formConnect);
     }
-
-    const handleLoginChange = (event) => {
-        const { name, value } = event.target;
-        setLoginCredentials({ ...loginCredentials, [name]: value });
-        console.log("Updated Login Credentials:", loginCredentials);
-    };
-
     
     return (
         <div className="container-navbar">
@@ -238,25 +231,21 @@ function Navbar() {
                 <div style={{ display: formConnect ? "block" : "none"}} className="container-form-connexion">
                     <h2 style={{color: "#fff"}}>Connectez-vous</h2>
                     <form onSubmit={handleLogin}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            name="email"
-                            value={loginCredentials.email}
-                            onChange={handleLoginChange}
-                            required
-                        />
-                        <input
-                            type="password"
-                            placeholder="Mot de passe"
-                            name="password"
-                            value={loginCredentials.password}
-                            onChange={handleLoginChange}
-                            required
-                        />
-                        <input type="submit" value="Se connecter" />
-                    </form>
-                    {errorMessage && <div className="error-message">{errorMessage}</div>}
+    <input
+        type="email"
+        placeholder="Email"
+        name="email"
+        required
+    />
+    <input
+        type="password"
+        placeholder="Mot de passe"
+        name="password"
+        required
+    />
+    <input type="submit" value="Se connecter" />
+</form>
+{errorMessage && <div className="error-message">{errorMessage}</div>}
                 </div>
          
 

@@ -2,6 +2,8 @@ import React from "react";
 import "./Info.css"
 
 function Info(){
+
+    
     return(
         <div className="container-info">
 
@@ -42,6 +44,7 @@ function Info(){
             </div>
 
         </div>
+        
     )
 }
 

@@ -1,5 +1,5 @@
 //const BASE_URL = 'http://localhost/back-website-restaurant-1/api'; 
-const BASE_URL = 'https://back-wok-rosny.onrender.com/api'; 
+const BASE_URL = 'https://cross-ply-dominion.000webhostapp.com/api'; 
 
 export const apiService = {
 
