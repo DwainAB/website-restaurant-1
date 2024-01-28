@@ -59,38 +59,46 @@ function Utilisateur() {
 
     const handleUpdateAllUsers = async (event) => {
         event.preventDefault();
-
+    
         let isUpdated = false;
-
+    
         for (const userId in editableUsers) {
             const formData = new FormData();
             const userData = editableUsers[userId];
-
+    
             for (const key in userData) {
                 formData.append(key, userData[key]);
             }
+    
             try {
                 const response = await apiService.updateUser(userId, formData);
-                // Maintenant, 'response' doit être un objet résultant de response.json()
-                if (response.ok) { // Cette ligne doit être modifiée car 'response' n'est plus une instance de 'Response'
-                    console.log('Réponse de l\'API:', response);
+                if (!response.ok) {
+                    throw new Error(`HTTP status code: ${response.status}`);
+                }
+                
+                const data = await response.json(); // Assurez-vous que la réponse est bien formatée en JSON côté serveur.
+                console.log('Réponse de l\'API:', data);
+                
+                // Vérifiez si le message de la réponse est un succès.
+                if (data.message === 'Utilisateur mis à jour avec succès.') {
                     isUpdated = true;
                 } else {
-                    console.error('Erreur lors de la mise à jour de l\'utilisateur', response);
+                    console.error('Erreur lors de la mise à jour de l\'utilisateur', data.message);
                 }
             } catch (error) {
                 console.error('Erreur lors de l\'envoi à l\'API', error);
             }
         }
-
+    
         if (isUpdated) {
             alert("Modifications ajoutées avec succès");
-            const updatedUsers = await apiService.updateUser();
+            const updatedUsers = await apiService.getAllUsers();
             setUsers(updatedUsers);
         }
-
+    
         setEditableUsers({});
     };
+    
 
     const handleDeleteUser = async (userId) => {
         try {
