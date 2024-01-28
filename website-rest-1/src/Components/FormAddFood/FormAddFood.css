@@ -8,6 +8,18 @@
     margin-top: 30px;
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
 .card{
     width: clamp(190px,11vw,230px);
     height: clamp(16rem,18.125vw,21.75rem);

@@ -108,7 +108,7 @@ function AddFoodForm() {
                     </select>
                     <input className='input-price-food' type="text" name="price" placeholder='Prix' value={price} onChange={handlePriceChange} required/>
                     <label className='addImg' htmlFor="addImg">Ajouter une image</label>
-                    <input style={{display :"none"}} id='addImg' type="file" name="image" onChange={handleImageChange} required/>
+                    <input className="visually-hidden" id='addImg' type="file" name="image" onChange={handleImageChange} required/>
                     <div className='container-btn-form-add'><button type="submit">Ajouter Plat</button></div>
                 </div>
             </form>
