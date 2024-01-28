@@ -71,7 +71,7 @@ function Utilisateur() {
             }
     
             try {
-                const response = await apiService.addUser(formData);
+                const response = await apiService.updateUser(formData);
                 if (!response.ok) {
                     const errorResponse = await response.json();
                     console.error('Erreur lors de l\'ajout de l\'utilisateur', errorResponse.error);
