@@ -59,39 +59,36 @@ function Utilisateur() {
 
     const handleUpdateAllUsers = async (event) => {
         event.preventDefault();
-        
+
         let isUpdated = false;
-    
+
         for (const userId in editableUsers) {
             const formData = new FormData();
             const userData = editableUsers[userId];
-    
+
             for (const key in userData) {
                 formData.append(key, userData[key]);
             }
-    
+
             try {
-                const response = await apiService.updateUser(formData);
-                if (!response.ok) {
-                    const errorResponse = await response.json();
-                    console.error('Erreur lors de l\'ajout de l\'utilisateur', errorResponse.error);
-                    // Gérer l'erreur ici
+                const response = await apiService.updateUser(userId, formData);
+                if (response.success) {
+                    console.log('Mise à jour réussie', response.message);
+                    isUpdated = true;
                 } else {
-                    const data = await response.json();
-                    console.log('Réponse de l\'API:', data);
-                    // Gérer la réponse de succès ici
+                    console.error('Erreur lors de la mise à jour', response.message);
                 }
             } catch (error) {
                 console.error('Erreur lors de l\'envoi à l\'API', error);
             }
         }
-    
+
         if (isUpdated) {
             alert("Modifications ajoutées avec succès");
             const updatedUsers = await apiService.updateUser();
             setUsers(updatedUsers);
         }
-    
+
         setEditableUsers({});
     };
 
