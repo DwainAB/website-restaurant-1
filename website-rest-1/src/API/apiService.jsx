@@ -183,16 +183,16 @@ export const apiService = {
 
     // Mettre à jour un utilisateur
     updateUser: async (id, userData) => {
-        try {
-            const response = await fetch(`${BASE_URL}/users/update/${id}`, {
-                method: 'POST',
-                body: userData,
-            });
-            return await response.json();
-        } catch (error) {
-            throw error;
+        const response = await fetch(`${BASE_URL}/users/update/${id}`, {
+            method: 'POST',
+            body: userData, // userData est un objet FormData
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
         }
+        return response.json(); // Ici, nous retournons la promesse qui résout en JSON
     },
+    
 
 
     // Récupérer tous les utilisateurs

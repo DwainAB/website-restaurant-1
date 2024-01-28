@@ -71,19 +71,15 @@ function Utilisateur() {
             }
             try {
                 const response = await apiService.updateUser(userId, formData);
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Réponse de l\'API:', data);
-                    isUpdated = true; // Indique qu'au moins un utilisateur a été mis à jour avec succès
-                    // Gérer la réponse de succès ici
+                // Maintenant, 'response' doit être un objet résultant de response.json()
+                if (response.ok) { // Cette ligne doit être modifiée car 'response' n'est plus une instance de 'Response'
+                    console.log('Réponse de l\'API:', response);
+                    isUpdated = true;
                 } else {
-                    const errorResponse = await response.json();
-                    console.error('Erreur lors de la mise à jour de l\'utilisateur', errorResponse);
-                    // Gérer l'erreur ici, si nécessaire
+                    console.error('Erreur lors de la mise à jour de l\'utilisateur', response);
                 }
             } catch (error) {
                 console.error('Erreur lors de l\'envoi à l\'API', error);
-                // Gérer l'erreur ici
             }
         }
 
