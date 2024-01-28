@@ -73,13 +73,13 @@ function Utilisateur() {
             try {
                 const response = await apiService.updateUser(userId, formData);
                 if (!response.ok) {
-                    throw new Error(`HTTP status code: ${response.status}`);
+                    const errorData = await response.json(); // Supposons que le serveur renvoie un JSON même pour les erreurs.
+                    throw new Error(`HTTP status code: ${response.status}, Message: ${errorData.message}`);
                 }
                 
-                const data = await response.json(); // Assurez-vous que la réponse est bien formatée en JSON côté serveur.
+                const data = await response.json();
                 console.log('Réponse de l\'API:', data);
                 
-                // Vérifiez si le message de la réponse est un succès.
                 if (data.message === 'Utilisateur mis à jour avec succès.') {
                     isUpdated = true;
                 } else {
@@ -87,6 +87,7 @@ function Utilisateur() {
                 }
             } catch (error) {
                 console.error('Erreur lors de l\'envoi à l\'API', error);
+                // Si vous souhaitez traiter l'erreur plus spécifiquement, vous pouvez ici.
             }
         }
     
@@ -98,6 +99,7 @@ function Utilisateur() {
     
         setEditableUsers({});
     };
+    
     
 
     const handleDeleteUser = async (userId) => {
