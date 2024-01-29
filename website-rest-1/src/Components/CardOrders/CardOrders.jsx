@@ -37,7 +37,7 @@ function CardsOrders() {
                         return { ...order, orders: parsedOrders, total };
                     } else {
                         // Traiter le cas où order.orders n'est pas une chaîne JSON valide
-                        console.error('Le champ "orders" n\'est pas une chaîne JSON valide:', order.orders);
+                        console.warn('Le champ "orders" n\'est pas une chaîne JSON valide:', order.orders);
                         return { ...order, orders: null, total: 0 };
                     }
                 } catch (error) {
