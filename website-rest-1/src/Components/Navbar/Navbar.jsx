@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import Logo from '../../assets/logo.png';
-import Login from "../Login/Login";
-import { handleLogout } from '../Logout/Logout';
 import { apiService } from "../../API/apiService";
 
 function Navbar() {
@@ -32,12 +30,16 @@ function Navbar() {
         const password = e.target.password.value;
     
         try {
-            const response = await fetch("https://back-wok-rosny.onrender.com/api/users/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
+        const response = await fetch("https://back-wok-rosny.onrender.com/api/users/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+
             });
     
             const data = await response.json();
@@ -181,10 +183,6 @@ function Navbar() {
         });
         setFormVisible(false);
     }
-    
-    
-    
-    
 
     const activateNavbar = () =>{
         setNavbarVisible(!navbarVisible)
