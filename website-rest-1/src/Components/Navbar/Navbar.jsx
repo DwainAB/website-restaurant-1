@@ -114,27 +114,22 @@ function Navbar() {
     const handleSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            // Récupérer les articles du panier stockés localement
             const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const orderData = {
                 ...clientData,
                 cartItems: storedCartItems
             };
     
-            // Envoyer les données de commande à votre API de backend
-            const orderResponse = await apiService.addClientAndOrder(orderData);
+            // Envoi des données de la commande au backend
+            const orderResponseData = await apiService.addClientAndOrder(orderData);
     
-            // Log pour débogage
-            console.log('Statut de la réponse:', orderResponse.status, 'Texte de la réponse:', orderResponse.statusText);
-    
-            if (!orderResponse.ok) {
-                // Cela ne devrait pas se produire si le statut est 201
-                const errorText = await orderResponse.text(); // ou orderResponse.json() si vous renvoyez du JSON
-                console.error('Réponse de l\'API commande:', errorText, 'Code d\'état:', orderResponse.status);
+            // Si la réponse n'est pas ok, déclenchez une erreur
+            if (!orderResponseData.ok) {
+                console.error('Réponse de l\'API commande:', orderResponseData);
                 throw new Error('Problème lors de l\'envoi de la commande');
             }
     
-            // Envoyer l'e-mail de confirmation
+            // Envoi de l'e-mail de confirmation
             const emailResponse = await fetch('https://votre-domaine.com/api/sendConfirmationEmail.php', {
                 method: 'POST',
                 headers: {
@@ -147,6 +142,7 @@ function Navbar() {
                 })
             });
     
+            // Si la réponse à l'e-mail n'est pas ok, déclenchez une erreur
             if (!emailResponse.ok) {
                 throw new Error('Problème lors de l\'envoi de l\'e-mail de confirmation');
             }
@@ -173,6 +169,7 @@ function Navbar() {
             alert('Une erreur est survenue lors de l\'envoi du formulaire.');
         }
     };
+    
     
     
 
