@@ -114,6 +114,12 @@ function Navbar() {
     const handleSubmitForm = async (e) => {
         e.preventDefault();
         try {
+            // Vérifier si les données du client sont complètes
+            if (!clientData.email || !clientData.firstname || !clientData.lastname) {
+                alert('Veuillez remplir tous les champs nécessaires.');
+                return;
+            }
+    
             const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const orderData = {
                 ...clientData,
@@ -123,7 +129,7 @@ function Navbar() {
             // Envoi des données de la commande au backend
             const orderResponseData = await apiService.addClientAndOrder(orderData);
     
-            // Si la réponse n'est pas ok, déclenchez une erreur
+            // Vérifier la réponse de la commande
             if (orderResponseData.message !== 'Commande ajoutée avec succès.') {
                 console.error('Réponse de l\'API commande:', orderResponseData);
                 throw new Error('Problème lors de l\'envoi de la commande');
@@ -142,25 +148,18 @@ function Navbar() {
                 })
             });
     
-            // Si la réponse à l'e-mail n'est pas ok, déclenchez une erreur
+            // Vérifier la réponse à l'e-mail
             if (!emailResponse.ok) {
                 throw new Error('Problème lors de l\'envoi de l\'e-mail de confirmation');
             }
     
+            // Traiter la réponse JSON de l'e-mail
             const emailData = await emailResponse.json();
             console.log('Réponse de l\'API e-mail:', emailData);
     
-            // Réinitialisation des données du formulaire et mise à jour de l'interface utilisateur
-            setClientData({
-                firstname: "",
-                lastname: "",
-                email: "",
-                phone: "",
-                address: "",
-                method: ""
-            });
+            // Réinitialiser les données du formulaire et de l'interface utilisateur
+            resetFormData();
     
-            setFormVisible(false);
             alert("Votre commande a bien été envoyée !");
             localStorage.removeItem('cartItems');
             window.location.reload();
@@ -169,6 +168,20 @@ function Navbar() {
             alert('Une erreur est survenue lors de l\'envoi du formulaire.');
         }
     };
+    
+    // Fonction pour réinitialiser les données du formulaire
+    function resetFormData() {
+        setClientData({
+            firstname: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            address: "",
+            method: ""
+        });
+        setFormVisible(false);
+    }
+    
     
     
     
