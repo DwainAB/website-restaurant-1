@@ -124,7 +124,7 @@ function Navbar() {
             const orderResponseData = await apiService.addClientAndOrder(orderData);
     
             // Si la réponse n'est pas ok, déclenchez une erreur
-            if (!orderResponseData.ok) {
+            if (orderResponseData.message !== 'Commande ajoutée avec succès.') {
                 console.error('Réponse de l\'API commande:', orderResponseData);
                 throw new Error('Problème lors de l\'envoi de la commande');
             }
