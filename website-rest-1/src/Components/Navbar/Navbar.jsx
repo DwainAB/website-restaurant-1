@@ -130,7 +130,7 @@ function Navbar() {
             }
     
             // Envoi de l'e-mail de confirmation
-            const emailResponse = await fetch('https://votre-domaine.com/api/sendConfirmationEmail.php', {
+            const emailResponse = await fetch('https://back-wok-rosny.onrender.com/services/sendEmail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
