@@ -32,7 +32,7 @@ function Navbar() {
         const password = e.target.password.value;
     
         try {
-            const response = await fetch("https://cross-ply-dominion.000webhostapp.com/api/users/login", {
+            const response = await fetch("https://back-wok-rosny.onrender.com/api/users/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -114,18 +114,28 @@ function Navbar() {
     const handleSubmitForm = async (e) => {
         e.preventDefault();
         try {
+            // Récupérer les articles du panier stockés localement
             const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const orderData = {
                 ...clientData,
                 cartItems: storedCartItems
             };
     
-            console.log('Order data before sending:', orderData); // Vérifiez les données avant l'envoi
+            // Envoyer les données de commande à votre API de backend
+            // Remplacez 'URL_API_BACKEND' par l'URL réelle de votre API backend
+            const orderResponse = await apiService.addClientAndOrder(orderData);
     
-            const response = await apiService.addClientAndOrder(orderData);
+            if (!orderResponse.ok) {
+                throw new Error('Problème lors de l\'envoi de la commande');
+            }
     
-            // Après l'ajout du client et de la commande, envoyez l'e-mail de confirmation
-            const emailResponse = await fetch('http://votre-domaine.com/api/sendConfirmationEmail.php', {
+            // Log pour débogage - vous pouvez le retirer plus tard
+            const orderResponseData = await orderResponse.json();
+            console.log('Réponse de l\'API commande:', orderResponseData);
+    
+            // Envoyer l'e-mail de confirmation
+            // Remplacez 'https://votre-domaine.com/api/sendConfirmationEmail.php' par l'URL réelle de votre script PHP
+            const emailResponse = await fetch('https://back-wok-rosny.onrender.com/services/sendEmail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -137,9 +147,14 @@ function Navbar() {
                 })
             });
     
-            const emailData = await emailResponse.text();
-            console.log(emailData); // Log la réponse de l'API e-mail pour débogage
+            if (!emailResponse.ok) {
+                throw new Error('Problème lors de l\'envoi de l\'e-mail de confirmation');
+            }
     
+            const emailData = await emailResponse.json();
+            console.log('Réponse de l\'API e-mail:', emailData);
+    
+            // Réinitialisation des données du formulaire et mise à jour de l'interface utilisateur
             setClientData({
                 firstname: "",
                 lastname: "",
@@ -150,14 +165,15 @@ function Navbar() {
             });
     
             setFormVisible(false);
-    
-            alert("Votre commande à bien été envoyé !");
+            alert("Votre commande a bien été envoyée !");
             localStorage.removeItem('cartItems');
-            window.location.reload()
+            window.location.reload();
         } catch (error) {
             console.error("Erreur lors de l'envoi du formulaire client : ", error);
+            alert('Une erreur est survenue lors de l\'envoi du formulaire.');
         }
     };
+    
     
 
     const activateNavbar = () =>{
