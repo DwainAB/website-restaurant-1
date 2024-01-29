@@ -27,13 +27,19 @@ function CardsOrders() {
             const ordersData = await apiService.getAllOrdersAndClients();
             const formattedOrders = ordersData.map(order => {
                 try {
-                    const parsedOrders = JSON.parse(`[${order.orders.replace(/}{/g, '},{')}]`);
-                    const total = parsedOrders.reduce((acc, product) => {
-                        const price = parseFloat(product.product_price) || 0;
-                        const quantity = parseFloat(product.order_quantity) || 0;
-                        return acc + (price * quantity);
-                    }, 0);
-                    return { ...order, orders: parsedOrders, total };
+                    if (typeof order.orders === 'string') {
+                        const parsedOrders = JSON.parse(`[${order.orders.replace(/}{/g, '},{')}]`);
+                        const total = parsedOrders.reduce((acc, product) => {
+                            const price = parseFloat(product.product_price) || 0;
+                            const quantity = parseFloat(product.order_quantity) || 0;
+                            return acc + (price * quantity);
+                        }, 0);
+                        return { ...order, orders: parsedOrders, total };
+                    } else {
+                        // Traiter le cas où order.orders n'est pas une chaîne JSON valide
+                        console.error('Le champ "orders" n\'est pas une chaîne JSON valide:', order.orders);
+                        return { ...order, orders: null, total: 0 };
+                    }
                 } catch (error) {
                     console.error('Erreur lors du traitement JSON pour la commande:', order);
                     console.error('Détail de l\'erreur:', error);
