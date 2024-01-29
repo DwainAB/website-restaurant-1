@@ -122,20 +122,20 @@ function Navbar() {
             };
     
             // Envoyer les données de commande à votre API de backend
-            // Remplacez 'URL_API_BACKEND' par l'URL réelle de votre API backend
             const orderResponse = await apiService.addClientAndOrder(orderData);
     
+            // Log pour débogage
+            console.log('Statut de la réponse:', orderResponse.status, 'Texte de la réponse:', orderResponse.statusText);
+    
             if (!orderResponse.ok) {
+                // Cela ne devrait pas se produire si le statut est 201
+                const errorText = await orderResponse.text(); // ou orderResponse.json() si vous renvoyez du JSON
+                console.error('Réponse de l\'API commande:', errorText, 'Code d\'état:', orderResponse.status);
                 throw new Error('Problème lors de l\'envoi de la commande');
             }
     
-            // Log pour débogage - vous pouvez le retirer plus tard
-            const orderResponseData = await orderResponse.json();
-            console.log('Réponse de l\'API commande:', orderResponseData);
-    
             // Envoyer l'e-mail de confirmation
-            // Remplacez 'https://votre-domaine.com/api/sendConfirmationEmail.php' par l'URL réelle de votre script PHP
-            const emailResponse = await fetch('https://back-wok-rosny.onrender.com/services/sendEmail.php', {
+            const emailResponse = await fetch('https://votre-domaine.com/api/sendConfirmationEmail.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
