@@ -25,33 +25,21 @@ function CardsOrders() {
     const fetchOrders = async () => {
         try {
             const ordersData = await apiService.getAllOrdersAndClients();
-            const formattedOrders = ordersData.map(order => {
-                try {
-                    if (typeof order.orders === 'string') {
-                        const parsedOrders = JSON.parse(`[${order.orders.replace(/}{/g, '},{')}]`);
-                        const total = parsedOrders.reduce((acc, product) => {
-                            const price = parseFloat(product.product_price) || 0;
-                            const quantity = parseFloat(product.order_quantity) || 0;
-                            return acc + (price * quantity);
-                        }, 0);
-                        return { ...order, orders: parsedOrders, total };
-                    } else {
-                        // Traiter le cas où order.orders n'est pas une chaîne JSON valide
-                        console.warn('Le champ "orders" n\'est pas une chaîne JSON valide:', order.orders);
-                        return { ...order, orders: null, total: 0 };
-                    }
-                } catch (error) {
-                    console.error('Erreur lors du traitement JSON pour la commande:', order);
-                    console.error('Détail de l\'erreur:', error);
-                    console.error('JSON brut:', order.orders);
-                    return { ...order, orders: null, total: 0 };
-                }
+            const formattedOrders = ordersData.map(client => {
+                // Supposons que `client.orders` est déjà un tableau d'objets (pas besoin de le parser)
+                const total = client.orders.reduce((acc, product) => {
+                    const price = parseFloat(product.product_price) || 0;
+                    const quantity = parseFloat(product.order_quantity) || 0;
+                    return acc + (price * quantity);
+                }, 0);
+                return { ...client, total }; // Ajouter le total calculé à l'objet client
             });
-            setOrders(formattedOrders);
+            setOrders(formattedOrders); // Mettre à jour le state avec les commandes formatées
         } catch (error) {
             console.error('Erreur lors de la récupération des commandes:', error);
         }
     };
+    
 
     const handleDelete = async (clientId) => {
         if (window.confirm("Êtes-vous sûr de vouloir supprimer ce client et toutes ses commandes ?")) {
