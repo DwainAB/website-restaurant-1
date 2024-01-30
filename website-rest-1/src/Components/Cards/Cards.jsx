@@ -10,16 +10,21 @@ function Cards() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 790);
     const [itemsPerPage, setItemsPerPage] = useState(isSmallScreen ? 6 : 10);
+    const [isLoading, setIsLoading] = useState(true); // État pour le suivi du chargement
+
 
     useEffect(() => {
         const fetchFoodsAndCategories = async () => {
+            setIsLoading(true)
             try {
                 const fetchedFoods = await apiService.getFoods();
                 const fetchedCategories = await apiService.getAllCategories();
                 setFoods(fetchedFoods);
-                setCategories(fetchedCategories); // Stocker les catégories récupérées
+                setCategories(fetchedCategories);
+                setIsLoading(false) 
             } catch (error) {
                 console.error("Erreur lors de la récupération des données :", error);
+                setIsLoading(false)
             }
         };
 
@@ -37,6 +42,8 @@ function Cards() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+
 
 
     const addToLocalStorage = (food) => {
@@ -89,15 +96,19 @@ function Cards() {
         <div className="container-cards" id="card">
             <h1 className="cards-title">Notre carte</h1>
             <div className="navigation-cards">
-            <select value={selectedCategory} onChange={(e) => handleCategoryClick(e.target.value)}>
-                <option value="Tous">Tous</option>
-                {categories.map((category) => (
-                    <option key={category.id} value={category.name}>{category.name}</option>
-                ))}
-            </select>
+                <select value={selectedCategory} onChange={(e) => handleCategoryClick(e.target.value)}>
+                    <option value="Tous">Tous</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.name}>{category.name}</option>
+                    ))}
+                </select>
             </div>
             <div className="global-cards">
-                {currentFoods.map((food) => (
+                {isLoading ? (
+                    <>
+                    <div className="card"></div>
+                    </>
+                ) : currentFoods.map((food) => (
                     <div className="card" key={food.id}>
                         <img className="card-img" src={`https://back-wok-rosny.onrender.com/${food.image}`} alt={food.title} />
                         <h2 className="card-title">{food.title}</h2>
@@ -112,18 +123,21 @@ function Cards() {
                 ))}
             </div>
             <div className="pagination">
-            {[...Array(pageCount)].map((_, index) => (
-                <button
-                    key={index}
-                    onClick={() => paginate(index + 1)}
-                    className={currentPage === index + 1 ? 'active' : ''}
-                >
-                    {index + 1}
-                </button>
-            ))}
-        </div>
+                {[...Array(pageCount)].map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => paginate(index + 1)}
+                        className={currentPage === index + 1 ? 'active' : ''}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+            </div>
         </div>
     );
+    
+    
+    
 }
 
 export default Cards;

@@ -50,6 +50,7 @@ function Navbar() {
                 setIsAuthenticated(true);
                 setUser(data.user);
                 setErrorMessage(''); // Réinitialiser le message d'erreur
+                formConnectVisible()
             } else {
                 setErrorMessage(data.error || 'Une erreur est survenue');
             }
@@ -271,21 +272,22 @@ function Navbar() {
                 <div style={{ display: formConnect ? "block" : "none"}} className="container-form-connexion">
                     <h2 style={{color: "#fff"}}>Connectez-vous</h2>
                     <form onSubmit={handleLogin}>
-    <input
-        type="email"
-        placeholder="Email"
-        name="email"
-        required
-    />
-    <input
-        type="password"
-        placeholder="Mot de passe"
-        name="password"
-        required
-    />
-    <input type="submit" value="Se connecter" />
-</form>
-{errorMessage && <div className="error-message">{errorMessage}</div>}
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            name="email"
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Mot de passe"
+                            name="password"
+                            required
+                        />
+                        <input type="submit" value="Se connecter" />
+                        <button onClick={formConnectVisible} className="btn-back-log">Retour</button>
+                    </form>
+                    {errorMessage && <div className="error-message">{errorMessage}</div>}
                 </div>
          
 

@@ -8,6 +8,16 @@ body{
     margin-top: 20px;
 }
 
+.btn-back-log{
+    color: #FF9A00;
+    background-color: #fff;
+    border: 0;
+    height: 30px;
+    border-radius: 20px;
+    font-weight: 500;
+    width: 150px;
+}
+
 li{
     list-style: none;
 }
@@ -309,7 +319,6 @@ input[type=submit]{
     background-color: #FF9A00;
     color: #fff;
     width: 150px;
-    margin-bottom: 50px;
 }
 
 .basket-empty{
